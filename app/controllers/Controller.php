@@ -78,10 +78,40 @@ abstract class Controller
 							$view_content = preg_replace('/{# js:' . $js . ' #}/', '<script src="js/' . $js . '"></script>', $view_content);
 						}
 						foreach ($array_img[0] as $img) {
-							var_dump($img);
+							$array_img_array[$img] = explode("|", $img);
+							foreach ($array_img_array[$img] as $img_array) {
+								$array_img_array_img[$img][] = explode(':', $img_array);
+							}
+						}
+						$array_img = $array_img_array_img;
+						$array_img_array_img = array();
+						foreach ($array_img as $full_img => $img_array) {
+							foreach ($img_array as $last_array_img) {
+								if (count($last_array_img) === 2) {
+									$array_img_array_img[$full_img][$last_array_img[0]] = $last_array_img[1];
+								}
+							}
+						}
+						$array_img = array();
+						foreach ($array_img_array_img as $full_img => $id_value) {
+							$the_full_img = "<img ";
+							foreach ($id_value as $attribute => $value) {
+								if ($attribute === "src") {
+									$the_full_img = $the_full_img . "src". '="img/' . $value . '" ';
+								} else {
+									$the_full_img = $the_full_img . $attribute . '="' . $value . '" ';
+								}
+							}
+							$the_full_img = $the_full_img . "/>";
+							$array_img["{# img:" . $full_img . " #}"] = $the_full_img;
+						}
+						foreach ($array_img as $value_to_find => $value_to_replace) {
+
+							$value_to_find = str_replace('|', '\|', $value_to_find);
+							$view_content = preg_replace("/" . $value_to_find . "/", $value_to_replace, $view_content);
 						}
 						foreach ($array_values as $value_to_find => $value_to_replace) {
-							if (preg_match('/{# ' . $value_to_find . ' #}/', $view_content)) {
+							if (preg_match("/{# " . $value_to_find . " #}/", $view_content)) {
 								$view_content = preg_replace("/{# " . $value_to_find . " #}/", $value_to_replace, $view_content);
 								$view_content = preg_replace("/{#" . $value_to_find . "#}/", $value_to_replace, $view_content);
 							}
