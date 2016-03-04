@@ -15,6 +15,7 @@ namespace Ismaspace;
  * Class Core
  *
  * The core of the framework 
+ *
  * 
  * PHP Version 5.6.17
  *
@@ -28,10 +29,9 @@ class Core
 {
 	static public function Run ()
 	{
-		var_dump("run");
-		/*if (isset($_GET["page"])) {
-			if (file_exists($path_array["framework"] . $path_array["controllers"] . ucfirst($_GET["page"]) . "Controller.php")) {
-				require_once($path_array["framework"] . $path_array["controllers"] . ucfirst($_GET["page"]) . "Controller.php");
+		if (isset($_GET["page"])) {
+			if (file_exists(constant("controllers_path") . ucfirst($_GET["page"]) . "Controller.php")) {
+				require_once(constant("controllers_path") . ucfirst($_GET["page"]) . "Controller.php");
 				$class_name = ucfirst($_GET["page"] . "Controller");
 				$class = new $class_name();
 				if (empty($_GET['action'])) {
@@ -39,11 +39,14 @@ class Core
 				} else {
 					$action = $_GET['action'] . 'Action';
 				}
-				$class->$action();
+				if (!method_exists($class, $action)) {
+					var_dump("Controller " . ucfirst($_GET["page"]) . "Controller" . " have not a method called " . $action . " !!!");
+				} else {
+					$class->$action();
+				}
 			} else {
-				//var_dump(rtrim(dirname(dirname(__DIR__)), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . "config.php");
-				//var_dump("Controller " . ucfirst($_GET["page"]) . "Controller.php" . " not found !!!");
+				var_dump("Controller " . ucfirst($_GET["page"]) . "Controller" . " not found !!!");
 			}
-		}*/
+		}
 	}
 }
