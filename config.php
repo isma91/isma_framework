@@ -38,3 +38,7 @@ define("public_path", constant("framework_path") . "public" . constant("DS"));
 define("controllers_path", constant("framework_path") . "app" . constant("DS") . "controllers" . constant("DS"));
 define("models_path", constant("framework_path") . "app" . constant("DS") . "models" . constant("DS"));
 define("views_path", constant("framework_path") . "app" . constant("DS") . "views" . constant("DS"));
+define("css_path", constant("public_path") . "css" . constant("DS"));
+define("js_path", constant("public_path") . "js" . constant("DS"));
+define("img_path", constant("public_path") . "img" . constant("DS"));
+define("font_path", constant("public_path") . "font" . constant("DS"));
