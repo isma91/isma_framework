@@ -1,5 +1,4 @@
 <?php
 require_once('../config.php');
-require_once($path_array["framework"] . $path_array["lib"] . "Ismaspace" . DIRECTORY_SEPARATOR . "Core.php");
-var_dump($path_array);
+require_once(constant("lib_path") . "Ismaspace" . DIRECTORY_SEPARATOR . "Core.php");
 \Ismaspace\Core::run();
