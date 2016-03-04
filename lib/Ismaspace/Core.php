@@ -54,7 +54,13 @@ class Core
     		$class = str_replace("Ismaspace\\", "", $class_name);
     		if ($class === "Controller") {
     			include_once constant("controllers_path") . $class . ".php";
+    		} elseif ($class === "Model") {
+    			include_once constant("lib_path") . $class . ".php";
     		}
+    	}
+    	if (substr($class_name, 0, 10) === "app\models") {
+    		$class = str_replace("app\models\\", "", $class_name);
+    		include_once constant("models_path") . $class . ".php";
     	}
     }
     public static function Run ()
