@@ -11,6 +11,7 @@
 */
 namespace app\controllers;
 use Ismaspace\Controller;
+use \app\models\TestTable;
 /**
  * Class Exmple
  *
@@ -36,6 +37,15 @@ class ExempleController extends Controller
 	 */
 	public function indexAction()
 	{
-		$this->render("Index:test.html", array("foo" => "bar", "baz" => 42, "wesh" => "ouais ouais ouais", "b2o" => "izi"));
+		/*
+		 * We have a model named TestTable, so we need to have a table in the database named tests
+		 * with find_one, we search in the tests table, if we have an username named ismaisma
+		 * if there is one, we get it in $test and we merge the array to display all the variable
+		 * with the test.html
+		 *
+		 */
+		$test_table = new TestTable();
+        $test = $test_table->find_one('username = ?', array('ismaisma'));
+		$this->render("Index:test.html", array_merge(array("foo" => "bar", "baz" => 42, "wesh" => "ouais ouais ouais", "b2o" => "izi"), $test));
 	}
 }
