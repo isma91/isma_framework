@@ -37,23 +37,26 @@ abstract class Controller
      */
 	public function render ($view = null, $array_values = null)
 	{
-		$tab_view = explode(":", $view);
-		if (count($tab_view) === 2) {
-			ucfirst($tab_view[0]);
-			$view_path = constant("views_path") . $tab_view[0] . constant("DS") . $tab_view[1];
+		$array_view = explode(":", $view);
+		if (count($array_view) === 2) {
+			ucfirst($array_view[0]);
+			$view_path = constant("views_path") . $array_view[0] . constant("DS") . $array_view[1];
 			if (file_exists($view_path)) {
 				if (empty($array_values) || $array_values === null) {
 					include_once $view_path;
 				} else {
-					$tab_values_keys = array_keys($array_values);
-					$tab_values_values = array_values($array_values);
-					if (count($tab_values_keys) === count($tab_values_values)) {
+					$array_values_keys = array_keys($array_values);
+					$array_values_values = array_values($array_values);
+					if (count($array_values_keys) === count($array_values_values)) {
 						ob_start();
-						$tab_values = array();
-						for ($i = 0; $i < count($tab_values_keys); $i = $i + 1) {
-							echo $tab_values_keys[$i] . '#';
-							echo $tab_values_values[$i];
-							if ($i !== count($tab_values_keys) - 1) {
+						$array_values = array();
+						$array_css = array();
+						$array_js = array();
+						$array_img = array();
+						for ($i = 0; $i < count($array_values_keys); $i = $i + 1) {
+							echo $array_values_keys[$i] . '#';
+							echo $array_values_values[$i];
+							if ($i !== count($array_values_keys) - 1) {
 								echo '~';
 							}
 						}
@@ -62,10 +65,22 @@ abstract class Controller
 						$content_values = implode('#', $content_values);
 						$content_values = explode('#', $content_values);
 						for ($j = 0; $j < count($content_values) - 1; $j = $j + 2) { 
-							$tab_values[$content_values[$j]] = $content_values[$j + 1];
+							$array_values[$content_values[$j]] = $content_values[$j + 1];
 						}
 						$view_content = file_get_contents($view_path);
-						foreach ($tab_values as $value_to_find => $value_to_replace) {
+						preg_match_all('/(?<={# css:)(.*)(?= #})/', $view_content, $array_css);
+						preg_match_all('/(?<={# js:)(.*)(?= #})/', $view_content, $array_js);
+						preg_match_all('/(?<={# img:)(.*)(?= #})/', $view_content, $array_img);
+						foreach ($array_css[0] as $css) {
+							$view_content = preg_replace('/{# css:' . $css . ' #}/', '<link media="all" type="text/css" rel="stylesheet" href="css/' . $css . '">', $view_content);
+						}
+						foreach ($array_js[0] as $js) {
+							$view_content = preg_replace('/{# js:' . $js . ' #}/', '<script src="js/' . $js . '"></script>', $view_content);
+						}
+						foreach ($array_img[0] as $img) {
+							var_dump($img);
+						}
+						foreach ($array_values as $value_to_find => $value_to_replace) {
 							if (preg_match('/{# ' . $value_to_find . ' #}/', $view_content)) {
 								$view_content = preg_replace("/{# " . $value_to_find . " #}/", $value_to_replace, $view_content);
 								$view_content = preg_replace("/{#" . $value_to_find . "#}/", $value_to_replace, $view_content);
@@ -75,9 +90,9 @@ abstract class Controller
 					}
 				}
 			} else {
-				var_dump("The file " . $tab_view[1] . " in the folder " . $tab_view[0] . " wasn't found !!");
-				var_dump("file_name : " . $tab_view[1]);
-				var_dump("folder path : " . constant("views_path") . $tab_view[0] . constant("DS"));
+				var_dump("The file " . $array_view[1] . " in the folder " . $array_view[0] . " wasn't found !!");
+				var_dump("file_name : " . $array_view[1]);
+				var_dump("folder path : " . constant("views_path") . $array_view[0] . constant("DS"));
 			}
 		} else {
 			var_dump("The view parameter must be like this :  folder_name:file_name");
