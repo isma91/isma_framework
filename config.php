@@ -40,3 +40,27 @@ define("css_path", constant("public_path") . "css" . constant("DS"));
 define("js_path", constant("public_path") . "js" . constant("DS"));
 define("img_path", constant("public_path") . "img" . constant("DS"));
 define("font_path", constant("public_path") . "font" . constant("DS"));
+
+/*YOU MUST CHANGE THESE VALUE !!
+ * Change $database_array's value to connect the framework with your database !!
+ *
+ * You can see the $database_exemple but do not use him !!!
+ */
+$database_exemple = array(
+	'host' => 'localhost',
+	'port' => '3306',
+	'database_name' => 'test',
+	'database_username' => 'root',
+	'database_password' => '',
+	'socket' => null
+	);
+
+$database_array = array(
+	'host' => '',
+	'port' => '',
+	'database_name' => '',
+	'database_username' => '',
+	'database_password' => '',
+	'socket' => null
+	);
+define('database_config', serialize($database_array));
