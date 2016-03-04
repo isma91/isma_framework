@@ -65,25 +65,29 @@ class Core
     }
     public static function Run ()
     {
-    	Core::register_autoload();
-    	if (isset($_GET["page"])) {
-    		if (file_exists(constant("controllers_path") . ucfirst($_GET["page"]) . "Controller.php")) {
-    			require_once(constant("controllers_path") . ucfirst($_GET["page"]) . "Controller.php");
-    			$class_name = 'app\controllers\\' . ucfirst($_GET["page"] . "Controller");
-    			$class = new $class_name();
-    			if (empty($_GET['action'])) {
-    				$action = 'indexAction';
+    	try {
+    		Core::register_autoload();
+    		if (isset($_GET["page"])) {
+    			if (file_exists(constant("controllers_path") . ucfirst($_GET["page"]) . "Controller.php")) {
+    				require_once(constant("controllers_path") . ucfirst($_GET["page"]) . "Controller.php");
+    				$class_name = 'app\controllers\\' . ucfirst($_GET["page"] . "Controller");
+    				$class = new $class_name();
+    				if (empty($_GET['action'])) {
+    					$action = 'indexAction';
+    				} else {
+    					$action = $_GET['action'] . 'Action';
+    				}
+    				if (!method_exists($class, $action)) {
+    					var_dump("Controller " . ucfirst($_GET["page"]) . "Controller" . " have not a method called " . $action . " !!!");
+    				} else {
+    					$class->$action();
+    				}
     			} else {
-    				$action = $_GET['action'] . 'Action';
+    				var_dump("Controller " . ucfirst($_GET["page"]) . "Controller" . " not found !!!");
     			}
-    			if (!method_exists($class, $action)) {
-    				var_dump("Controller " . ucfirst($_GET["page"]) . "Controller" . " have not a method called " . $action . " !!!");
-    			} else {
-    				$class->$action();
-    			}
-    		} else {
-    			var_dump("Controller " . ucfirst($_GET["page"]) . "Controller" . " not found !!!");
     		}
+    	} catch (Exception $e) {
+    		var_dump($e->getMessage());
     	}
     }
 }
