@@ -4,7 +4,7 @@
  * 
  * PHP Version 5.6.17
  *
- * @category Controller
+ * @category Framework
  * @package  Controller
  * @author   isma91 <ismaydogmus@gmail.com>
  * @license  http://www.gnu.org/licenses/agpl-3.0.fr.html
@@ -21,7 +21,6 @@ use app\controllers;
  * PHP Version 5.6.17
  *
  * @category Controller
- * @package  Controller
  * @author   isma91 <ismaydogmus@gmail.com>
  * @license  http://www.gnu.org/licenses/agpl-3.0.fr.html
  * @link     https://github.com/isma91/isma_framework/blob/master/lib/Ismaspace/Core.php

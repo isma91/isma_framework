@@ -4,8 +4,7 @@
 * 
 * PHP Version 5.6.17
 *
-* @category Controller
-* @package  Controller
+* @category Framework
 * @author   isma91 <ismaydogmus@gmail.com>
 * @license  http://www.gnu.org/licenses/agpl-3.0.fr.html
 * @link     https://github.com/isma91/isma_framework
@@ -19,7 +18,6 @@ namespace Ismaspace;
  * PHP Version 5.6.17
  *
  * @category Controller
- * @package  Controller
  * @author   isma91 <ismaydogmus@gmail.com>
  * @license  http://www.gnu.org/licenses/agpl-3.0.fr.html
  * @link     https://github.com/isma91/isma_framework/blob/master/app/controllers/controller.php
