@@ -49,7 +49,6 @@ class Core
      */
     public static function auto_include_once ($class_name)
     {
-    	var_dump("auto_include_once => " . $class_name);
     	if (substr($class_name, 0, 9) === "Ismaspace") {
     		$class = str_replace("Ismaspace\\", "", $class_name);
     		if ($class === "Controller") {
