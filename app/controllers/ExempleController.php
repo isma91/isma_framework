@@ -10,7 +10,8 @@
 * @license  http://www.gnu.org/licenses/agpl-3.0.fr.html
 * @link     https://github.com/isma91/isma_framework
 */
-//namespace app\controllers;
+namespace app\controllers;
+use Ismaspace\Controller;
 /**
  * Class Exmple
  *
@@ -25,7 +26,7 @@
  * @link     https://github.com/isma91/isma_framework/blob/master/app/controllers/ExempleController.php
  */
 
-class ExempleController
+class ExempleController extends Controller
 {
 	/*
 	 * IndexAction
@@ -37,6 +38,6 @@ class ExempleController
 	 */
 	public function indexAction()
 	{
-		var_dump("Hello i'm the class " . __CLASS__);
+		$this->render("Index:test.html", array("foo" => "bar", "baz" => 42, "wesh" => "ouais ouais ouais", "b2o" => "izi"));
 	}
 }
