@@ -10,10 +10,11 @@
 * @license  http://www.gnu.org/licenses/agpl-3.0.fr.html
 * @link     https://github.com/isma91/isma_framework
 */
+//namespace app\controllers;
 /**
- * Class Index
+ * Class Exmple
  *
- * Some Class 
+ * An exemple class to understand the framework
  * 
  * PHP Version 5.6.17
  *
@@ -21,13 +22,20 @@
  * @package  Controller
  * @author   isma91 <ismaydogmus@gmail.com>
  * @license  http://www.gnu.org/licenses/agpl-3.0.fr.html
- * @link     https://github.com/isma91/isma_framework/blob/master/app/controllers/IndexController.php
+ * @link     https://github.com/isma91/isma_framework/blob/master/app/controllers/ExempleController.php
  */
 
-class IndexController
+class ExempleController
 {
-	
-	function __construct()
+	/*
+	 * IndexAction
+	 *
+	 * if you don't set an action in the url, the action
+	 * is gonna be indexAction, so we strongly recommend
+	 * to create an method called indexAction
+	 *
+	 */
+	public function indexAction()
 	{
 		var_dump("Hello i'm the class " . __CLASS__);
 	}
