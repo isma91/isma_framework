@@ -4,8 +4,8 @@
 
 You can use it in **linux** and **windows**
 
-- Latest Stable release : **version** : *1.1.0* **date** : *04-03-2016*
-- Latest Dev release : **version** : *1.1.0* **date** : *04-03-2016*
+- Latest Stable release : **version** : *1.1.00* **date** : *04-03-2016*
+- Latest Dev release : **version** : *1.1.00* **date** : *04-03-2016*
 - License : [AGPLv3](http://www.gnu.org/licenses/agpl-3.0.fr.html)
 
 You must edit the `config.php` and change the value in `$array_database`
