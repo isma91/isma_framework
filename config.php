@@ -43,8 +43,12 @@ define("font_path", constant("public_path") . "font" . constant("DS"));
 /*
  * To check the framework version
  */
-define("framework_version", "1.1.0");
-define("framework_date_version", "04-03-2016");
+if (!defined("framework_version")) {
+	define("framework_version", "1.1.0");
+}
+if (!defined("framework_date_version")) {
+	define("framework_date_version", "04-03-2016");
+}
 /*YOU MUST CHANGE THESE VALUE !!
  * Change $database_array's value to connect the framework with your database !!
  *
@@ -60,11 +64,11 @@ $database_exemple = array(
 	);
 /* enleve les value avant de push !! */
 $database_array = array(
-	'host' => 'localhost',
-	'port' => '3306',
-	'database_name' => 'test',
-	'database_username' => 'root',
-	'database_password' => 'benihime91',
+	'host' => '',
+	'port' => '',
+	'database_name' => '',
+	'database_username' => '',
+	'database_password' => '',
 	'socket' => null
 	);
 define('database_config', serialize($database_array));
