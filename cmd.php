@@ -171,6 +171,8 @@ function display_check () {
     colorize("Check if the core model has been edited", null, null, true);
     colorize("  check:core               ", null, "green", false);
     colorize("Check if the core autoload has been edited", null, null, true);
+    colorize("  check:htaccess           ", null, "green", false);
+    colorize("Check if the .htaccess in the frmework has been edited", null, null, true);
 }
 var_dump($argv);
 if (count($argv) === 1) {
