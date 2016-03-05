@@ -29,7 +29,7 @@ You can prepare the replacement in the template like this :
 ```
 {# foo #} => current variable
 {# css:style.css #} => take style.css in public/css folder
-{# css:jquery.js #} => take jquery.js in public/js folder
+{# js:jquery.js #} => take jquery.js in public/js folder
 ```
 
 You can also add some attribute in your image :  
