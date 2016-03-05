@@ -10,6 +10,9 @@
 * @link     https://github.com/isma91/isma_framework
 */
 namespace Ismaspace;
+if (!defined("framework_version") || !defined("framework_date_version")) {
+    die("Access not allowed !!");
+}
 /**
  * Class Controller
  *

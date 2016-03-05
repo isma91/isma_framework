@@ -12,6 +12,9 @@
  */
 namespace Ismaspace;
 use app\controllers;
+if (!defined("framework_version") || !defined("framework_date_version")) {
+    die("Access not allowed !!");
+}
 /**
  * Class Core
  *
