@@ -10,7 +10,7 @@ You can use it in **linux** and **windows**
 
 You must edit the `config.php` and change the value in `$array_database`  
 
-You can also use `cmd.php` to use the framework more quickly and easier the framework
+You can also use `cmd.php` to use the framework more quickly and easier
 
 The view is in :  
 
