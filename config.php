@@ -44,13 +44,13 @@ define("font_path", constant("public_path") . "font" . constant("DS"));
  * To check the framework version
  */
 if (!defined("framework_version")) {
-	define("framework_version", "1.1.0");
+	define("framework_version", "1.1.00");
 }
 if (!defined("framework_date_version")) {
 	define("framework_date_version", "04-03-2016");
 }
 if (!defined("cmd_version")) {
-	define("cmd_version", "1.0.0");
+	define("cmd_version", "1.0.00");
 }
 if (!defined("cmd_date_version")) {
 	define("cmd_date_version", "05-03-2016");
