@@ -174,6 +174,85 @@ function display_check () {
     colorize("  check:htaccess           ", null, "green", false);
     colorize("Check if the .htaccess in the frmework has been edited", null, null, true);
 }
+function check_model () {
+    colorize("Checking your core model file ...", "cyan", "black", true);
+    $model_content_url = file_get_contents("http://framework.ismaydogmus.fr/lib/Model.php");
+    if (file_exists(constant("lib_path") . "Model.php")) {
+        $model_content_local = file_get_contents(constant("lib_path") . "Model.php");
+        if ($model_content_url === $model_content_local) {
+            colorize("Model.php has not been changed !!", "green", "black", true);
+        } else {
+            colorize("Your Model.php has been changed !!", "red", "black", true);
+            colorize("Did you want to overwride your local Model.php by the original ?", "grey", "black", true);
+            colorize("[Y] [N]: ", "grey", "black", false);
+            $ask = 0;
+            $answer = fopen("php://stdin", "r");
+            $response = fgets($answer);
+            $response = trim($response);
+            $response = mb_strtoupper(substr($response, 0, 1));
+            var_dump($response);
+            while ($ask === 0) {
+                if ($response === "Y") {
+                    $ask++;
+                    colorize("Overwrite the the local model to the original one ...", "cyan", "black", true);
+                    try {
+                        file_put_contents(constant("lib_path") . "Model.php", $model_content_url);
+                    } catch (Exception $e) {
+                        colorize("We overwrite but it looks like it wasn't successful...", "red", "black", true);
+                        colorize("Create a new issue in https://github.com/isma91/isma_framework/issues and we gonna do our best to fix your problem", "red", "black", true);
+                    }
+                    colorize("We successfully overwrite your local Model.php enjoy the framework !!", "green", "black", true);
+                } elseif ($response === "N") {
+                    colorize("Your Model.php has been edited !! If it's you, it's at your own risk !!", "yellow", "black", true);
+                    $ask++;
+                } else {
+                    colorize("Tape N to refuse the overwrite or Y to get Model.php to the original one !!", "yellow", "black");
+                    colorize("[Y] [N]: ", "grey", "black", false);
+                    $ask = 0;
+                    $answer = fopen("php://stdin", "r");
+                    $response = fgets($answer);
+                    $response = trim($response);
+                    $response = mb_strtoupper(substr($response, 0, 1));
+                }
+            }
+        }
+    } else {
+        colorize("There is not Model.php in the lib directory !!", "red", "black", true);
+        colorize("We can create a new Model.php in the lib directory if you want...", "grey", "black", true);
+        colorize("[Y] [N]: ", "grey", "black", false);
+        $ask = 0;
+        $answer = fopen("php://stdin", "r");
+        $response = fgets($answer);
+        $response = trim($response);
+        $response = mb_strtoupper(substr($response, 0, 1));
+        var_dump($response);
+        while ($ask === 0) {
+            if ($response === "Y") {
+                $ask++;
+                colorize("Creation of Model.php in the lib directory...", "cyan", "black", true);
+                try {
+                    file_put_contents(constant("lib_path") . "Model.php", $model_content_url);
+                } catch (Exception $e) {
+                    colorize("It looks like we can't create Model.php in the lib directory...", "red", "black", true);
+                    colorize("Create a new issue in https://github.com/isma91/isma_framework/issues and we gonna do our best to fix your problem", "red", "black", true);
+                }
+                colorize("We successfully create Model.php enjoy the framework !!", "green", "black", true);
+            } elseif ($response === "N") {
+                colorize("You don't have Model.php in the lib directory !!", "red", "black", true);
+                colorize("The framework don't gonna work properly !!", "red", "black", true);
+                $ask++;
+            } else {
+                colorize("Tape N to refuse to create or Y to get a new Model.php in the lib directory !!", "yellow", "black");
+                colorize("[Y] [N]: ", "grey", "black", false);
+                $ask = 0;
+                $answer = fopen("php://stdin", "r");
+                $response = fgets($answer);
+                $response = trim($response);
+                $response = mb_strtoupper(substr($response, 0, 1));
+            }
+        }
+    }
+}
 var_dump($argv);
 if (count($argv) === 1) {
     display_cmd();
@@ -193,6 +272,9 @@ if (count($argv) === 1) {
             break;
         case "--check";
             display_check();
+            break;
+        case "check:model":
+            check_model();
             break;
     }
 }
