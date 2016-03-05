@@ -49,6 +49,12 @@ if (!defined("framework_version")) {
 if (!defined("framework_date_version")) {
 	define("framework_date_version", "04-03-2016");
 }
+if (!defined("cmd_version")) {
+	define("cmd_version", "1.0.0");
+}
+if (!defined("cmd_date_version")) {
+	define("cmd_date_version", "05-03-2016");
+}
 /*YOU MUST CHANGE THESE VALUE !!
  * Change $database_array's value to connect the framework with your database !!
  *
