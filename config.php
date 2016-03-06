@@ -50,7 +50,7 @@ if (!defined("framework_date_version")) {
 	define("framework_date_version", "04-03-2016");
 }
 if (!defined("cmd_version")) {
-	define("cmd_version", "1.0.20");
+	define("cmd_version", "1.0.25");
 }
 if (!defined("cmd_date_version")) {
 	define("cmd_date_version", "06-03-2016");
