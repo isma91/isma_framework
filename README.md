@@ -1,6 +1,5 @@
 # isma_framework
-##A Custom PHP framework
-###Using the MVC structure
+##A Custom PHP framework using the MVC structure
 
 You can use it in **linux** and **windows**
 
