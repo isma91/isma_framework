@@ -292,6 +292,36 @@ function check_file ($file) {
         }
     }
 }
+/*
+ * Check_cmd
+ *
+ * Check if your cmd or framework is in the last version
+ *
+ * @param string $const The framework or cmd version
+ * @return void
+ */
+function check_version($const) {
+    $config_content_url = file_get_contents("http://framework.ismaydogmus.fr/config.php");
+    $config_content_local = file_get_contents(constant("framework_path") . "config.php");
+    if ($const === "cmd") {
+        preg_match('/(define\(\"cmd_version\"\,\ \")(.*)(?="\)\;)/', $config_content_url, $version_url);
+        preg_match('/(define\(\"cmd_version\"\,\ \")(.*)(?="\)\;)/', $config_content_local, $version_local);
+    } elseif ($const) {
+        preg_match('/(define\(\"framework_version\"\,\ \")(.*)(?="\)\;)/', $config_content_url, $version_url);
+        preg_match('/(define\(\"framework_version\"\,\ \")(.*)(?="\)\;)/', $config_content_local, $version_local);
+    }
+    colorize("You " . $const . " version is           ", null, "white", false);
+    colorize(end($version_local), "grey", "black", true);
+    colorize("The latest version of " . $const . " is ", null, "white", false);
+    colorize(end($version_url), "grey", "black", true);
+    if (version_compare(end($version_local), end($version_url), '<')) {
+        colorize("Your version is outdated !! You must get the latest version of " . $const . " !!", "red", "black", true);
+    } elseif (version_compare(end($version_local), end($version_url), '=')) {
+        colorize("Your " . $const . " version is the latest !!", "green", "black");
+    } else {
+        colorize("You can't have a most recent version than " . end($version_url) . " !! You must change the contant with the good version !!", "yellow", "black");
+    }
+}
 if (count($argv) === 1) {
     display_cmd();
 } elseif (count($argv) === 2) {
@@ -319,6 +349,12 @@ if (count($argv) === 1) {
             break;
         case "check:core":
             check_file("core");
+            break;
+        case "check:cmd":
+            check_version("cmd");
+            break;
+        case "check:isma":
+            check_version("framework");
             break;
     }
 }
