@@ -171,24 +171,25 @@ function display_check () {
     colorize("Check if the core model has been edited", null, null, true);
     colorize("  check:core               ", null, "green", false);
     colorize("Check if the core autoload has been edited", null, null, true);
-    colorize("  check:htaccess           ", null, "green", false);
-    colorize("Check if the .htaccess in the frmework has been edited", null, null, true);
 }
 function check_file ($file) {
     colorize("Checking your core " . $file . " file ...", "cyan", "black", true);
     switch ($file) {
         case "model":
             $content_url = file_get_contents("http://framework.ismaydogmus.fr/lib/Model.php");
-            $content_local = file_get_contents(constant("lib_path") . "Model.php");
             $path = constant("lib_path") . "Model.php";
             break;
         case "controller":
             $content_url = file_get_contents("http://framework.ismaydogmus.fr/app/controllers/Controller.php");
-            $content_local = file_get_contents(constant("controllers_path") . "Controller.php");
             $path = constant("controllers_path") . "Controller.php";
+            break;
+        case "core":
+            $content_url = file_get_contents("http://framework.ismaydogmus.fr/lib/Ismaspace/Core.php");
+            $path = constant("lib_path") . "Ismaspace" . constant("DS") . "Core.php";
             break;
     }
     if (file_exists($path)) {
+        $content_local = file_get_contents($path);
         if ($content_url === $content_local) {
             colorize(ucfirst($file) . ".php has not been changed !!", "green", "black", true);
         } else {
@@ -287,6 +288,9 @@ if (count($argv) === 1) {
             break;
         case "check:controller":
             check_file("controller");
+            break;
+        case "check:core":
+            check_file("core");
             break;
     }
 }
