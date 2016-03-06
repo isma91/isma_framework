@@ -137,6 +137,8 @@ function display_cmd () {
     colorize("Display all the check options you can use with cmd", null, null, true);
     colorize("  --create                ", null, "green", false);
     colorize("Display all the create options you can use with cmd", null, null, true);
+    colorize("  -f --fresh                 ", null, "green", false);
+    colorize("Delte all exemple in the framework to have a fresh start", null, null, true);
     colorize("Check :", null, "orange", true);
     colorize("  check:isma                ", null, "green", false);
     colorize("Check if the current version of the framework is the latest", null, null, true);
@@ -322,6 +324,58 @@ function check_version($const) {
         colorize("You can't have a most recent version than " . end($version_url) . " !! You must change the contant with the good version !!", "yellow", "black");
     }
 }
+/*
+ * Fresh start
+ *
+ * Remove all the exemple in the framework
+ *
+ * @return void
+ */
+function fresh_start () {
+    colorize("Getting all the exemple in th framework...", "cyan", "black", true);
+    $array_file_exemple = array(
+        constant("framework_path") . "test.sql" => "test.sql",
+        constant("controllers_path") . "ExempleController.php" => "ExempleController.php",
+        constant("models_path") . "TestTable.php" => "TestTable.php",
+        constant("views_path") . "Index/test.html" => "test.html",
+        constant("css_path") . "materialize.min.css" => "materialize.min.css",
+        constant("css_path") . "mui.min.css" => "mui.min.css",
+        constant("js_path") . "jquery-2.1.4.min.css" => "jquery-2.1.4.min.css",
+        constant("js_path") . "materialize.min.css" => "materialize.min.css",
+        constant("js_path") . "mui.min.css" => "mui.min.css",
+        constant("img_path") . "3k.jpg" => "3k.jpg",
+        constant("img_path") . "confused.gif" => "confused.gif",
+        constant("font_path") . "Pacifico.ttf" => "Pacifico.ttf",
+    );
+    $array_folder_exemple = array(
+        constant("views_path") . "Index/" => "Index"
+    );
+    foreach ($array_file_exemple as $file_path => $file_name) {
+        if (file_exists($file_path)) {
+            unlink($file_path);
+            colorize("Removing", "cyan", "black", false);
+            colorize(" ", null, null, false);
+            colorize($file_name, "cyan", "white", true);
+        } else {
+            colorize($file_name, "yellow", "white", false);
+            colorize(" ", null, null, false);
+            colorize("not found !!", "yellow", "white", false);
+        }
+    }
+    foreach ($array_folder_exemple as $folder_path => $folder_name) {
+        if (file_exists($folder_path)) {
+            unlink($folder_path);
+            colorize("Removing", "cyan", "black", false);
+            colorize(" ", null, null, false);
+            colorize($folder_name, "cyan", "white", true);
+        } else {
+            colorize($folder_name, "yellow", "white", false);
+            colorize(" ", null, null, false);
+            colorize("not found !!", "yellow", "white", false);
+        }
+    }
+    colorize("All test file and folder are removed !! Enjoy the fresh start !!", "green", "black", true);
+}
 if (count($argv) === 1) {
     display_cmd();
 } elseif (count($argv) === 2) {
@@ -355,6 +409,12 @@ if (count($argv) === 1) {
             break;
         case "check:isma":
             check_version("framework");
+            break;
+        case "-f":
+            fresh_start();
+            break;
+        case "--fresh":
+            fresh_start();
             break;
     }
 }
