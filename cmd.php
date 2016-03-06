@@ -359,19 +359,19 @@ function fresh_start () {
         } else {
             colorize($file_name, "yellow", "white", false);
             colorize(" ", null, null, false);
-            colorize("not found !!", "yellow", "white", false);
+            colorize("not found !!", "yellow", "white", true);
         }
     }
     foreach ($array_folder_exemple as $folder_path => $folder_name) {
         if (file_exists($folder_path)) {
-            unlink($folder_path);
+            rmdir($folder_path);
             colorize("Removing", "cyan", "black", false);
             colorize(" ", null, null, false);
             colorize($folder_name, "cyan", "white", true);
         } else {
             colorize($folder_name, "yellow", "white", false);
             colorize(" ", null, null, false);
-            colorize("not found !!", "yellow", "white", false);
+            colorize("not found !!", "yellow", "white", true);
         }
     }
     colorize("All test file and folder are removed !! Enjoy the fresh start !!", "green", "black", true);
