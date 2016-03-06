@@ -99,6 +99,13 @@ if (!defined("framework_version") || !defined("framework_date_version") || !defi
 if (version_compare(phpversion(), '5.6.0', '<')) {
     die("Your PHP version isn't high enough, you must ave at least PHP 5.6 !!");
 }
+/*
+ * Display_cmd
+ *
+ * Display all the Options and Argument
+ *
+ * @return void
+ */
 function display_cmd () {
     colorize("Welcome to the cmd of ", null, "white", false);
     colorize("isma_framework ", null, "bold_green", false);
@@ -142,6 +149,13 @@ function display_cmd () {
     colorize("  check:core               ", null, "green", false);
     colorize("Check if the core autoload has been edited", null, null, true);
 }
+/*
+ * Display_version
+ *
+ * Display the version of the framework and the cmd
+ *
+ * @return void
+ */
 function display_version () {
     colorize("cmd.php        ", null, "white", false);
     colorize("version ", null, null, false);
@@ -159,6 +173,13 @@ function display_version () {
     colorize("You can have the latest version of the framework and the cmd on github !!", null, "white", true);
     colorize("https://github.com/isma91/isma_framework.git", null, "white", true);
 }
+/*
+ * Display_check
+ *
+ * Display all the check options
+ *
+ * @return void
+ */
 function display_check () {
     colorize("Check :", null, "orange", true);
     colorize("  check:isma                ", null, "green", false);
@@ -172,6 +193,14 @@ function display_check () {
     colorize("  check:core               ", null, "green", false);
     colorize("Check if the core autoload has been edited", null, null, true);
 }
+/*
+ * Check_file
+ *
+ * Check if a file is changed or not
+ *
+ * @param string; $file the file name
+ * @return void
+ */
 function check_file ($file) {
     colorize("Checking your core " . $file . " file ...", "cyan", "black", true);
     switch ($file) {
@@ -263,7 +292,6 @@ function check_file ($file) {
         }
     }
 }
-var_dump($argv);
 if (count($argv) === 1) {
     display_cmd();
 } elseif (count($argv) === 2) {
