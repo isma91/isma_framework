@@ -70,6 +70,39 @@ abstract Class Model
     		}
     	}
     }
+	/*
+	 * Set_pdo
+	 *
+	 * Create a new PDO statement
+	 *
+	 * @param string;  $host      Host of the database
+	 * @param integer; $port      Port of the database
+	 * @param string;  $database  Name of the database
+	 * @param string;  $username  Username to connect to the database
+	 * @param string;  $password  Password to connect to the database
+	 * @param string;  $Socket    Path of the mysql socket (linux only)
+	 */
+	public function set_pdo ($host, $port, $database, $username, $password, $socket = null) {
+		if (!empty($host) && !empty($database) && !empty($port) && !empty($username)) {
+			if ($socket === null) {
+				try {
+					self::$pdo = new \PDO("mysql:host=" . $host . ";port=" . $port . ";dbname=" . $database, $username, $password);
+				}
+				catch(\PDOException $e)
+				{
+					var_dump($e->getMessage());
+				}
+			} else {
+				try {
+					self::$pdo = new \PDO("mysql:host=" . $host . ";port=" . $port . ";dbname=" . $database . ";" . $socket, $username, $password);
+				}
+				catch(\PDOException $e)
+				{
+					var_dump($e->getMessage());
+				}
+			}
+		}
+	}
     /**
      * Find_one
      *
@@ -120,6 +153,7 @@ abstract Class Model
 	 */
 	public function create_field($type, $name, $length = null, $options = null, $default = null)
 	{
+		$connection = unserialize(constant('database_config'));
 		if (!empty($type) && !empty($name)) {
 			if ($options === null) {
 				$options = "";
@@ -129,6 +163,8 @@ abstract Class Model
 			}
 			if ($length === null) {
 				$length = "";
+			} else {
+				$length = "(" . $length . ")";
 			}
 			if ($default === null) {
 				$default = "";
@@ -151,7 +187,7 @@ abstract Class Model
 					$length = "";
 					$default = "";
 					break;
-				case "date_time":
+				case "datetime":
 					$length = "";
 					$default = "";
 					break;
@@ -182,7 +218,8 @@ abstract Class Model
 				case "float":
 					break;
 				case "increments":
-					$options = "NOT NULL AUTO_INCREMENT";
+					$type_name = "INT";
+					$options = "NOT NULL PRIMARY KEY AUTO_INCREMENT";
 					$default = "";
 					break;
 				case "integer":
@@ -215,7 +252,7 @@ abstract Class Model
 				default:
 					break;
 			}
-			return "$name" . " " . "$type_name" . "$length" . " " . $options . " " . $default;
+			return "`$name`" . " " . "$type_name" . "$length" . " " . $options . " " . $default;
 		}
 		return "";
 	}
@@ -227,17 +264,48 @@ abstract Class Model
 	 * @param string; $table_name  the table name
 	 * @param array;  $array_field array of the field and type
 	 *
-	 * @return void
+	 * @return string; The Final sql query to create the table
 	 */
-	/*public function create_table ($table_name, array $array_field)
+	public function create_table ($table_name, array $array_field)
 	{
 		if (!empty($table_name) && !empty($array_field)) {
 			$db = self::$pdo;
 			if ($db === null) {
 				var_dump("You must check your database configuration !!");
 			} else {
-				$sql = "CREATE TABLE IF NOT EXISTS `$table_name(";
+				$sql = "CREATE TABLE IF NOT EXISTS `$table_name`(";
+				for ($i = 0; $i < count($array_field); $i = $i + 1) {
+					if ($i === count($array_field) - 1) {
+						$sql = $sql . $array_field[$i];
+					} else {
+						$sql = $sql . $array_field[$i] . ", ";
+					}
+				}
+				$sql = $sql . ");";
+				return $sql;
 			}
 		}
-	}*/
+	}
+	/*
+	 * Database_execute
+	 *
+	 * Function to execute all sql request
+	 *
+	 * @param string; $sql The sql query
+	 *
+	 * @return void
+	 */
+	public function database_execute ($sql) {
+		if (!empty($sql)) {
+			if (self::$pdo === null) {
+				var_dump("You must check your database configuration !!");
+			} else {
+				try {
+					self::$pdo->exec($sql);
+				} catch (\PDOException $e) {
+					var_dump($e);
+				}
+			}
+		}
+	}
 }
