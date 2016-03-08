@@ -154,6 +154,9 @@ function display_cmd () {
     colorize("Check if the core model has been edited", null, null, true);
     colorize("  check:core               ", null, "green", false);
     colorize("Check if the core autoload has been edited", null, null, true);
+    colorize("Make :", null, "orange", true);
+    colorize(" make:migration [table_name]", null, "green", true);
+    colorize("Get the function [table_name]Table in the Migration.php and create the table", null, null, true);
 }
 /*
  * Display_version
