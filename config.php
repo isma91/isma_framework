@@ -40,20 +40,21 @@ define("css_path", constant("public_path") . "css" . constant("DS"));
 define("js_path", constant("public_path") . "js" . constant("DS"));
 define("img_path", constant("public_path") . "img" . constant("DS"));
 define("font_path", constant("public_path") . "font" . constant("DS"));
+define("database_path", constant("framework_path") . constant("DS") . "database" . constant("DS"));
 /*
  * To check the framework version
  */
 if (!defined("framework_version")) {
-	define("framework_version", "1.1.00");
+	define("framework_version", "1.2.00");
 }
 if (!defined("framework_date_version")) {
-	define("framework_date_version", "04-03-2016");
+	define("framework_date_version", "08-03-2016");
 }
 if (!defined("cmd_version")) {
-	define("cmd_version", "1.0.25");
+	define("cmd_version", "1.1.0");
 }
 if (!defined("cmd_date_version")) {
-	define("cmd_date_version", "06-03-2016");
+	define("cmd_date_version", "08-03-2016");
 }
 /*YOU MUST CHANGE THESE VALUE !!
  * Change $database_array's value to connect the framework with your database !!
