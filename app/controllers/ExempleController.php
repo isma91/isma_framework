@@ -12,6 +12,7 @@
 namespace app\controllers;
 use Ismaspace\Controller;
 use \app\models\TestTable;
+
 /**
  * Class Exmple
  *
@@ -45,7 +46,7 @@ class ExempleController extends Controller
 		 *
 		 */
 		$test_table = new TestTable();
-        $test = $test_table->find_one('username = ?', array('ismaisma'));
-		$this->render("Index:test.html", array_merge(array("foo" => "bar", "baz" => 42, "wesh" => "ouais ouais ouais", "b2o" => "izi"), $test));
+		//$test = $test_table->find_one('username = ?', array('ismaisma'));
+		$this->render("Index:test.html", array("foo" => "bar", "baz" => 42, "wesh" => "ouais ouais ouais", "b2o" => "izi"));
 	}
 }

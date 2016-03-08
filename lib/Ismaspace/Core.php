@@ -52,12 +52,15 @@ class Core
      */
     public static function auto_include_once ($class_name)
     {
+		//var_dump($class_name);
     	if (substr($class_name, 0, 9) === "Ismaspace") {
     		$class = str_replace("Ismaspace\\", "", $class_name);
     		if ($class === "Controller") {
     			include_once constant("controllers_path") . $class . ".php";
     		} elseif ($class === "Model") {
     			include_once constant("lib_path") . $class . ".php";
+    		} elseif ($class === "Migration") {
+    			include_once constant("database_path") . $class . ".php";
     		}
     	}
     	if (substr($class_name, 0, 10) === "app\models") {
