@@ -393,38 +393,42 @@ function fresh_start () {
  */
 function create_table ($table_name) {
     $function_name = $table_name . "Table";
-    colorize("Here is the SQL query :", "cyan", "black", true);
-    $create_table = Migration::$function_name();
-    colorize($create_table, "cyan", "white", true);
-    colorize("Did you want to execute this query ?", "grey", "black", true);
-    colorize("[Y] [N]: ", "grey", "black", false);
-    $ask = 0;
-    $answer = fopen("php://stdin", "r");
-    $response = fgets($answer);
-    $response = trim($response);
-    $response = mb_strtoupper(substr($response, 0, 1));
-    while ($ask === 0) {
-        if ($response === "Y") {
-            $ask++;
-            colorize("Executing the SQL query...", "cyan", "black", true);
-            try {
-                Model::database_execute($create_table);
-                colorize("Table " . $table_name . " created successfully !! Enjoy the framework !!", "green", "black", true);
-            } catch (Exception $e) {
-                colorize("Error when we try to execute the query !! Check your function " . $function_name . " in the Migration.php file !!", "red", "black", true);
+    if (method_exists(new Migration(), $function_name) === true) {
+        colorize("Here is the SQL query :", "cyan", "black", true);
+        $create_table = Migration::$function_name();
+        colorize($create_table, "cyan", "white", true);
+        colorize("Did you want to execute this query ?", "grey", "black", true);
+        colorize("[Y] [N]: ", "grey", "black", false);
+        $ask = 0;
+        $answer = fopen("php://stdin", "r");
+        $response = fgets($answer);
+        $response = trim($response);
+        $response = mb_strtoupper(substr($response, 0, 1));
+        while ($ask === 0) {
+            if ($response === "Y") {
+                $ask++;
+                colorize("Executing the SQL query...", "cyan", "black", true);
+                try {
+                    Model::database_execute($create_table);
+                    colorize("Table " . $table_name . " created successfully !! Enjoy the framework !!", "green", "black", true);
+                } catch (Exception $e) {
+                    colorize("Error when we try to execute the query !! Check your function " . $function_name . " in the Migration.php file !!", "red", "black", true);
+                }
+            } elseif ($response === "N") {
+                colorize("The table " . $table_name . " wasn't created !!", "yellow", "black", true);
+                $ask++;
+            } else {
+                colorize("Tape N to refuse to create the table " . $table_name . " or Y to execute the query !!", "yellow", "black");
+                colorize("[Y] [N]: ", "grey", "black", false);
+                $ask = 0;
+                $answer = fopen("php://stdin", "r");
+                $response = fgets($answer);
+                $response = trim($response);
+                $response = mb_strtoupper(substr($response, 0, 1));
             }
-        } elseif ($response === "N") {
-            colorize("The table " . $table_name . " wasn't created !!", "yellow", "black", true);
-            $ask++;
-        } else {
-            colorize("Tape N to refuse to create the table " .$table_name . " or Y to execute the query !!", "yellow", "black");
-            colorize("[Y] [N]: ", "grey", "black", false);
-            $ask = 0;
-            $answer = fopen("php://stdin", "r");
-            $response = fgets($answer);
-            $response = trim($response);
-            $response = mb_strtoupper(substr($response, 0, 1));
         }
+    } else {
+        colorize("Function " . $function_name . " not found in Migration.php", "red", "black", true);
     }
 }
 if (count($argv) === 1) {
