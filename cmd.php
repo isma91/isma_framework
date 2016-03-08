@@ -22,6 +22,10 @@
  * @link     https://github.com/isma91/isma_framework/blob/master/cmd.php
  */
 require_once("config.php");
+require_once(constant("lib_path") . "Ismaspace" . constant("DS") . "Core.php");
+\Ismaspace\Core::run();
+use Ismaspace\Migration;
+use Ismaspace\Model;
 /*
  * Colorize
  *
@@ -232,7 +236,6 @@ function check_file ($file) {
             $response = fgets($answer);
             $response = trim($response);
             $response = mb_strtoupper(substr($response, 0, 1));
-            var_dump($response);
             while ($ask === 0) {
                 if ($response === "Y") {
                     $ask++;
@@ -376,6 +379,51 @@ function fresh_start () {
     }
     colorize("All test file and folder are removed !! Enjoy the fresh start !!", "green", "black", true);
 }
+/*
+ * Create_table
+ *
+ * Create a table in the database with the help of Migration.php
+ *
+ * @param string: $table_name The table name
+ *
+ * @return void
+ */
+function create_table ($table_name) {
+    $function_name = $table_name . "Table";
+    colorize("Here is the SQL query :", "cyan", "black", true);
+    $create_table = Migration::$function_name();
+    colorize($create_table, "cyan", "white", true);
+    colorize("Did you want to execute this query ?", "grey", "black", true);
+    colorize("[Y] [N]: ", "grey", "black", false);
+    $ask = 0;
+    $answer = fopen("php://stdin", "r");
+    $response = fgets($answer);
+    $response = trim($response);
+    $response = mb_strtoupper(substr($response, 0, 1));
+    while ($ask === 0) {
+        if ($response === "Y") {
+            $ask++;
+            colorize("Executing the SQL query...", "cyan", "black", true);
+            try {
+                Model::database_execute($create_table);
+                colorize("Table " . $table_name . " created successfully !! Enjoy the framework !!", "green", "black", true);
+            } catch (Exception $e) {
+                colorize("Error when we try to execute the query !! Check your function " . $function_name . " in the Migration.php file !!", "red", "black", true);
+            }
+        } elseif ($response === "N") {
+            colorize("The table " . $table_name . " wasn't created !!", "yellow", "black", true);
+            $ask++;
+        } else {
+            colorize("Tape N to refuse to create the table " .$table_name . " or Y to execute the query !!", "yellow", "black");
+            colorize("[Y] [N]: ", "grey", "black", false);
+            $ask = 0;
+            $answer = fopen("php://stdin", "r");
+            $response = fgets($answer);
+            $response = trim($response);
+            $response = mb_strtoupper(substr($response, 0, 1));
+        }
+    }
+}
 if (count($argv) === 1) {
     display_cmd();
 } elseif (count($argv) === 2) {
@@ -415,6 +463,12 @@ if (count($argv) === 1) {
             break;
         case "--fresh":
             fresh_start();
+            break;
+    }
+} elseif (count($argv) === 3) {
+    switch ($argv[1]) {
+        case "make:migration":
+            create_table($argv[2]);
             break;
     }
 }
