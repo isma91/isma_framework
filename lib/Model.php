@@ -71,6 +71,16 @@ abstract Class Model
     	}
     }
 	/*
+	 * Get_pdo
+	 *
+	 * Function to get the pdo
+	 *
+	 * @return PDO; $pdo
+	 */
+	public function get_pdo () {
+		return self::$pdo;
+	}
+	/*
 	 * Set_pdo
 	 *
 	 * Create a new PDO statement
