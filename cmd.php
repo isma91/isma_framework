@@ -412,6 +412,65 @@ function create_table ($table_name) {
                     try {
                         Model::database_execute($create_table);
                         colorize("Table " . $table_name . " created successfully !! Enjoy the framework !!", "green", "black", true);
+                        colorize("Did you want that we create this table's model ?", "grey", "black", true);
+                        colorize("[Y] [N]: ", "grey", "black", false);
+                        $ask_ceate_model = 0;
+                        $answer_create_model = fopen("php://stdin", "r");
+                        $response_create_model = fgets($answer_create_model);
+                        $response_create_model = trim($response_create_model);
+                        $response_create_model = mb_strtoupper(substr($response_create_model, 0, 1));
+                        while ($ask_ceate_model === 0) {
+                            if ($response_create_model === "Y") {
+                                colorize("Describe your class", "grey", "black", true);
+                                colorize("[Model class for " . ucfirst($table_name) . "]", "grey", "black", false);
+                                $answer_description_model = fopen("php://stdin", "r");
+                                $response_description_model = fgets($answer_description_model);
+                                $response_description_model = trim($response_description_model);
+                                if (empty($response_description_model)) {
+                                    $response_description_model = "Model class for " . ucfirst($table_name);
+                                }
+                                colorize("Your name", "grey", "black", true);
+                                colorize("[Foo]", "grey", "black", false);
+                                $answer_author_name = fopen("php://stdin", "r");
+                                $response_author_name = fgets($answer_author_name);
+                                $response_author_name = trim($response_author_name);
+                                if (empty($response_author_name)) {
+                                    $response_author_name = "Foo";
+                                }
+                                colorize("Your professional email", "grey", "black", true);
+                                colorize("[foo@bar.com]", "grey", "black", false);
+                                $answer_author_email = fopen("php://stdin", "r");
+                                $response_author_email = fgets($answer_author_email);
+                                $response_author_email = trim($response_author_email);
+                                if (empty($response_author_email)) {
+                                    $response_author_email = "foo@bar.com";
+                                }
+                                $model_template_content = file_get_contents("http://framework.ismaydogmus.fr/app/models/model_template.php");
+                                $model_template_content = str_replace("\$class_name", ucfirst($table_name), $model_template_content);
+                                $model_template_content = str_replace("\$class_description", $response_description_model, $model_template_content);
+                                $model_template_content = str_replace("\$author_name", $response_author_name, $model_template_content);
+                                $model_template_content = str_replace("\$author_email", $response_author_email, $model_template_content);
+                                if (file_exists(constant("models_path") . ucfirst($table_name) . "Table.php")) {
+                                    colorize(ucfirst($table_name) . "Table.php already exist !!", "red", "black", true);
+                                } else {
+                                    colorize("Creating " . ucfirst($table_name) . "Table.php...", "cyan", "black", true);
+                                    file_put_contents(constant("models_path") . ucfirst($table_name) . "Table.php", $model_template_content);
+                                    colorize($table_name . ".php created successfully in app/models/" . ucfirst($table_name) . "Table.php !! Enjoy the framework !!", "green", "black", true);
+                                }
+                                $ask_ceate_model++;
+                            } elseif ($response_create_model === "N") {
+                                colorize("Model file " . ucfirst($table_name) . "Table.php not created !! Enjoy the framework !!", "green", "black", true);
+                                $ask_ceate_model++;
+                            } else {
+                                colorize("Tape N to refuse to create the model file " . ucfirst($table_name) . "Table.php or Y to create it !!", "yellow", "black");
+                                colorize("[Y] [N]: ", "grey", "black", false);
+                                $ask_ceate_model = 0;
+                                $answer_create_model = fopen("php://stdin", "r");
+                                $response_create_model = fgets($answer_create_model);
+                                $response_create_model = trim($response_create_model);
+                                $response_create_model = mb_strtoupper(substr($response_create_model, 0, 1));
+                            }
+                        }
                     } catch (Exception $e) {
                         colorize("Error when we try to execute the query !! Check your function " . $function_name . " in the Migration.php file !!", "red", "black", true);
                     }
