@@ -12,7 +12,7 @@
 namespace app\models;
 use \Ismaspace\Model;
 /**
- * Class Test
+ * Class User
  *
  * A test model to understand the framework
  * 
@@ -23,6 +23,6 @@ use \Ismaspace\Model;
  * @license  http://www.gnu.org/licenses/agpl-3.0.fr.html
  * @link     https://github.com/isma91/isma_framework/blob/master/app/models/TestModel.php
  */
-class TestTable extends Model
+class UsersTable extends Model
 {
 }
