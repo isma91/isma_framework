@@ -26,13 +26,13 @@ In this exemple we use in `TestController.php` the method `blaAction()`
   
 You can prepare the replacement in the template like this :  
 ```
-{# foo #} => current variable
-{# css:style.css #} => take style.css in public/css folder
-{# js:jquery.js #} => take jquery.js in public/js folder
+{{ foo }} => current variable
+{% css:style.css %} => take style.css in public/css folder
+{% js:jquery.js %} => take jquery.js in public/js folder
 ```
 
 You can also add some attribute in your image :  
 ```
-{# img:src:my_photo.jpg|alt:mega big image|id:big_image|class:image #}
+{% img:src:my_photo.jpg|alt:mega big image|id:big_image|class:image %}
 take photo.jpg in public/img folder with big_image as id and image as class
 ```
