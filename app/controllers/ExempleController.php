@@ -46,7 +46,7 @@ class ExempleController extends Controller
          *
          */
         $user_table = new UsersTable();
-        $user = $user_table->find_one('username = ?', array('ismaisma'));
+        $user = $user_table->find_one('username = ?', array('isma91'));
         $this->render("Index:test.html", array_merge(array("foo" => "bar", "baz" => 42, "wesh" => "ouais ouais ouais", "b2o" => "izi"), $user));
     }
 }
