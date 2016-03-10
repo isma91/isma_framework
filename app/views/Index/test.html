@@ -5,19 +5,19 @@
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="Yay !! it works !!!" />
-    {# css:mui.min.css #}
-    {# css:materialize.min.css #}
-    {# js:jquery-2.1.4.min.js #}
-    {# js:mui.min.js #}
-    {# js:materialize.min.js #}
+    {% css:mui.min.css %}
+    {% css:materialize.min.css %}
+    {% js:jquery-2.1.4.min.js %}
+    {% js:mui.min.js %}
+    {% js:materialize.min.js %}
 </head>
 <body>
 <div class="container">
     <p>Some img here !!</p>
-    <p>{# foo #}</p>
-    <p>{# baz #}</p>
-    <p>{# wesh #}</p>
-    <p>{# b2o #}</p>
+    <p>{{ foo }}</p>
+    <p>{{ baz }}</p>
+    <p>{{ wesh }}</p>
+    <p>{{ b2o }}</p>
     <table>
         <caption>A User !!</caption>
         <tr>
@@ -27,14 +27,14 @@
             <th>Birthdate :</th>
         </tr>
         <tr>
-            <td>{# firstname #}</td>
-            <td>{# lastname #}</td>
-            <td>{# username #}</td>
-            <td>{# birthdate #}</td>
+            <td>{{ firstname }}</td>
+            <td>{{ lastname }}</td>
+            <td>{{ username }}</td>
+            <td>{{ birthdate }}</td>
         </tr>
     </table>
-    <p>{# img:src:confused.gif|alt:a confused people|id:john|class:image #}</p>
-    <p>{# img:src:3k.jpg|alt:mega big image|id:big_image|class:image #}</p>
+    <!--<p>{% img:src:confused.gif|alt:a confused people|id:john|class:image %}</p>
+    <p>{% img:src:3k.jpg|alt:mega big image|id:big_image|class:image %}</p>-->
     </div>
 </body>
 </html>
