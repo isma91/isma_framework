@@ -3,7 +3,7 @@
 
 You can use it in **linux** and **windows**
 
-- Latest Stable release : **version** : *1.2.00* **date** : *08-03-2016*
+- Latest Stable release : **version** : *1.3.00* **date** : *11-03-2016*
 - Latest Dev release : **version** : *1.2.00* **date** : *07-03-2016*
 - License : [AGPLv3](http://www.gnu.org/licenses/agpl-3.0.fr.html)
 
