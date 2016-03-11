@@ -12,6 +12,7 @@
  */
 namespace Ismaspace;
 use app\controllers;
+use Ismaspace\IsmaException;
 if (!defined("framework_version") || !defined("framework_date_version")) {
     die("Access not allowed !!");
 }
@@ -61,7 +62,9 @@ class Core
     			include_once constant("lib_path") . $class . ".php";
     		} elseif ($class === "Migration") {
     			include_once constant("database_path") . $class . ".php";
-    		}
+    		} elseif ($class === "IsmaException") {
+				include_once constant("ismaspace_path") . "IsmaException.php";
+			}
     	}
     	if (substr($class_name, 0, 10) === "app\models") {
     		$class = str_replace("app\models\\", "", $class_name);
@@ -91,7 +94,7 @@ class Core
     				var_dump("Controller " . ucfirst($_GET["page"]) . "Controller" . " not found !!!");
     			}
     		}
-    	} catch (Exception $e) {
+    	} catch (\Exception $e) {
     		var_dump($e->getMessage());
     	}
     }
