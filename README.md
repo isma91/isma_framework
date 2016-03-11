@@ -35,4 +35,20 @@ You can also add some attribute in your image :
 ```
 {% img:src:my_photo.jpg|alt:mega big image|id:big_image|class:image %}
 take photo.jpg in public/img folder with big_image as id and image as class
+```  
+
+For loop you must do like this :  
+```
+{% user in users %}  
+    * {{ user.firstname }}
+    * {{ user.lastname }}
+{% else %}
+    No user found !!
+{% endfor %}
+```  
+
+In your controller, you must render with an array like this :  
+```
+$users = $user_table->find_all('*');
+$this->render("Index:test.html", array("users" => $users));
 ```
