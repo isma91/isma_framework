@@ -27,10 +27,14 @@
             <th>Birthdate :</th>
         </tr>
         <tr>
-            <td>{{ firstname }}</td>
-            <td>{{ lastname }}</td>
-            <td>{{ username }}</td>
-            <td>{{ birthdate }}</td>
+            {% for user in users %}
+            <td>* {{ user.firstname }}</td>
+            <td>* {{ user.lastname }}</td>
+            <td>* {{ user.username }}</td>
+            <td>* {{ user.birthdate }}</td>
+            {% else %}
+                No User found
+            {% endfor %}
         </tr>
     </table>
     <!--<p>{% img:src:confused.gif|alt:a confused people|id:john|class:image %}</p>
