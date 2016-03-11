@@ -32,6 +32,7 @@ if (!defined("DS")) {
 }
 define("framework_path", rtrim(__DIR__, constant("DS")) . constant("DS"));
 define("lib_path", constant("framework_path") . "lib" . constant("DS"));
+define("ismaspace_path", constant("lib_path") . "Ismaspace" . constant("DS"));
 define("public_path", constant("framework_path") . "public" . constant("DS"));
 define("controllers_path", constant("framework_path") . "app" . constant("DS") . "controllers" . constant("DS"));
 define("models_path", constant("framework_path") . "app" . constant("DS") . "models" . constant("DS"));
@@ -60,6 +61,8 @@ if (!defined("cmd_date_version")) {
  * Change $database_array's value to connect the framework with your database !!
  *
  * You can see the $database_exemple but do not use him !!!
+ * You can change the error_description value and the project_name if you want
+ *
  */
 $database_exemple = array(
 	'host' => 'localhost',
@@ -79,3 +82,5 @@ $database_array = array(
 	'socket' => null
 	);
 define('database_config', serialize($database_array));
+define("error_description", "You are in the error page !!");
+define("project_name", basename(__DIR__));
