@@ -10,6 +10,7 @@
 * @link     https://github.com/isma91/isma_framework
 */
 namespace Ismaspace;
+use Ismaspace\IsmaException;
 if (!defined("framework_version") || !defined("framework_date_version")) {
     die("Access not allowed !!");
 }
@@ -58,15 +59,15 @@ abstract Class Model
     		}
     		catch(\PDOException $e)
     		{
-    			var_dump($e->getMessage());
-    		}
-    	} else {
-    		try {
-    			self::$pdo = new \PDO("mysql:host=" . $this->_host . ";port=" . $this->_port . ";dbname=" . $this->_database . ";" . $this->_socket, $this->_username, $this->_password);
-    		}
-    		catch(\PDOException $e)
-    		{
-    			var_dump($e->getMessage());
+				IsmaException::display_exception("pdo", $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace());
+			}
+		} else {
+			try {
+				self::$pdo = new \PDO("mysql:host=" . $this->_host . ";port=" . $this->_port . ";dbname=" . $this->_database . ";" . $this->_socket, $this->_username, $this->_password);
+			}
+			catch(\PDOException $e)
+			{
+				IsmaException::display_exception("pdo", $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace());
     		}
     	}
     }
@@ -136,7 +137,7 @@ abstract Class Model
     		$className = str_replace('Table', '', $className);
     	}
     	$className = lcfirst($className);
-    	$className = $className . 's';
+    	$className = rtrim($className, "s") . 's';
     	$db = self::$pdo;
     	if ($db === null) {
     		var_dump("You must check your database configuration !!");
@@ -148,6 +149,54 @@ abstract Class Model
     		return $value;
     	}
     }
+	/**
+	 * Find_all
+	 *
+	 * Made an SQL request to find all
+	 *
+	 * @param string; $field The field that we want to get
+	 *
+	 * @return Array
+	 */
+	public function find_all ($field = "*", $placeholders=array())
+	{
+		$className = get_called_class();
+		if (preg_match('/app/', $className)) {
+			$className = str_replace('app\\', '', $className);
+		}
+		if (preg_match('/models/', $className)) {
+			$className = str_replace('models\\', '', $className);
+		}
+		if (preg_match('/Table/', $className)) {
+			$className = str_replace('Table', '', $className);
+		}
+		$className = lcfirst($className);
+		$className = rtrim($className, "s") . 's';
+		$db = self::$pdo;
+		if ($db === null) {
+			var_dump("You must check your database configuration !!");
+		} else {
+			$sql = 'SELECT ' . $field . ' FROM ' . $className;
+			$request = $db->prepare($sql);
+			$request->execute();
+			$value = $request->fetchAll(\PDO::FETCH_ASSOC);
+			$array_field = array();
+			if ($field !== "*") {
+				foreach ($value as $value_field) {
+					foreach ($value_field as $val) {
+						$array_field[$field][] = $val;
+					}
+				}
+			} else {
+				foreach ($value as $value_field) {
+					foreach ($value_field as $key => $val) {
+						$array_field[$key][] = $val;
+					}
+				}
+			}
+			return $array_field;
+		}
+	}
 	/*
 	 * Create_field
 	 *
