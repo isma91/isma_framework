@@ -26,16 +26,16 @@
             <th>Login :</th>
             <th>Birthdate :</th>
         </tr>
+        {% for user in users %}
         <tr>
-            {% for user in users %}
-            <td>* {{ user.firstname }}</td>
-            <td>* {{ user.lastname }}</td>
             <td>* {{ user.username }}</td>
+            <td>* {{ user.lastname }}</td>
             <td>* {{ user.birthdate }}</td>
-            {% else %}
-                No User found
-            {% endfor %}
+            <td>* {{ user.firstname }}</td>
         </tr>
+        {% else %}
+        No User found
+        {% endfor %}
     </table>
     <!--<p>{% img:src:confused.gif|alt:a confused people|id:john|class:image %}</p>
     <p>{% img:src:3k.jpg|alt:mega big image|id:big_image|class:image %}</p>-->
