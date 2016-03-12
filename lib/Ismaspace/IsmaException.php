@@ -48,10 +48,8 @@ class IsmaException extends \Exception
      */
     public function database_exception ($error_message, $error_code, $error_file, $error_line, $error_trace)
     {
-        if (!empty($error_message) && !empty($error_code) && !empty($error_file) && !empty($error_line) && !empty($error_trace)) {
-            $database_config = unserialize(constant("database_config"));
-
-            if (!empty($error_message) && !empty($error_code) && !empty($error_file) && !empty($error_line) && !empty($error_trace)) {
+        if (!empty($error_message) && !empty($error_file) && !empty($error_line) && !empty($error_trace)) {
+                $database_config = unserialize(constant("database_config"));
                 switch ($error_code) {
                     case 1045:
                         if (empty($database_config["database_username"])) {
@@ -99,7 +97,6 @@ class IsmaException extends \Exception
             } else {
             }
             return $array_exception;
-        }
     }
     /*
      * Database_exception
