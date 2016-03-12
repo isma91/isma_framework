@@ -336,14 +336,11 @@ function fresh_start () {
         constant("controllers_path") . "ExempleController.php" => "ExempleController.php",
         constant("models_path") . "TestTable.php" => "TestTable.php",
         constant("views_path") . "Index/test.html" => "test.html",
-        constant("css_path") . "materialize.min.css" => "materialize.min.css",
-        constant("css_path") . "mui.min.css" => "mui.min.css",
         constant("js_path") . "jquery-2.1.4.min.css" => "jquery-2.1.4.min.css",
         constant("js_path") . "materialize.min.css" => "materialize.min.css",
         constant("js_path") . "mui.min.css" => "mui.min.css",
         constant("img_path") . "3k.jpg" => "3k.jpg",
         constant("img_path") . "confused.gif" => "confused.gif",
-        constant("font_path") . "Pacifico.ttf" => "Pacifico.ttf",
     );
     $array_folder_exemple = array(
         constant("views_path") . "Index/" => "Index"
