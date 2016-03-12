@@ -1,0 +1,48 @@
+@font-face {
+	font-family: 'Pacifico';
+	font-style: normal;
+	src: url('../font/Pacifico.ttf');
+}
+@font-face {
+	font-family: 'Abel-Regular';
+	font-style: normal;
+	src: url('../font/Abel-Regular.ttf');
+}
+html,body {
+	height:100%;
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Abel-Regular', sans-serif;
+}
+.title {
+	text-align: center;
+	margin: auto;
+	font-family: 'Pacifico', cursive;
+	font-size: 2em;
+}
+.div_error {
+    margin-top: 5%;
+    text-align: center;
+}
+.error_title {
+    font-size: 1.3em;
+    float: left;
+}
+.error_code,
+.error_line {
+    color: #00A702;
+	font-size: 1.5em;
+	font-weight: bold;
+}
+.error_message {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.database_username {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #D00000;
+}
+.error_file {
+    font-size: 1.5em;
+}
