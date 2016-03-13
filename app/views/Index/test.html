@@ -19,7 +19,7 @@
     <p>{{ wesh }}</p>
     <p>{{ b2o }}</p>
     <table>
-        <caption>A User !!</caption>
+        <caption>Some User !!</caption>
         <tr>
             <th>Firstname :</th>
             <th>Lastname :</th>
@@ -37,8 +37,14 @@
         No User found
         {% endfor %}
     </table>
-    <!--<p>{% img:src:confused.gif|alt:a confused people|id:john|class:image %}</p>
-    <p>{% img:src:3k.jpg|alt:mega big image|id:big_image|class:image %}</p>-->
+    {% for exemple in exemples %}
+        <p>* {{ exemple.a }}</p>
+        <p>* {{ exemple.b }}</p>
+    {% else %}
+        <p>Lorem Ipsum lorem ipsum</p>
+    {% endfor %}
+    <p>{% img:src:confused.gif|alt:a confused people|id:john|class:image %}</p>
+    <p>{% img:src:3k.jpg|alt:mega big image|id:big_image|class:image %}</p>
     </div>
 </body>
 </html>
