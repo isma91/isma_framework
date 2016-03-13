@@ -72,7 +72,6 @@ $database_exemple = array(
 	'database_password' => '*******',
 	'socket' => null
 	);
-/* enleve les value avant de push !! */
 $database_array = array(
 	'host' => '',
 	'port' => '',
