@@ -60,12 +60,12 @@ abstract class Controller
         }
         $img_path = "";
         if ($path_count === 0) {
-            $img_path = "js" . constant("DS");
+            $img_path = "img" . constant("DS");
         } elseif ($path_count > 0) {
             for ($k = 0; $k < $path_count; $k = $k + 1) {
                 $img_path = $img_path . ".." . constant("DS");
             }
-            $img_path = $img_path . "js" . constant("DS");
+            $img_path = $img_path . "img" . constant("DS");
         }
         $array_css = array();
         $array_js = array();
