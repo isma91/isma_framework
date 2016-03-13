@@ -26,7 +26,9 @@
         <span class="error_title">Line : </span><span class="error_line">{{ error_line }}</span>
     </div>
     <div class="mui-panel div_error">
-        <span class="error_title">Stack trace : </span>
+        <span class="error_title">Stack trace : </span> {% for error_traces %}
+            <div class="mui-panel div_error">* {{ error_trace }}</div>
+        {% endfor %}
     </div>
 </div>
 </body>
