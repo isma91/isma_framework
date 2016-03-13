@@ -59,7 +59,7 @@ abstract Class Model
     		}
     		catch(\PDOException $e)
     		{
-				IsmaException::display_exception("pdo", $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace());
+				die(IsmaException::display_exception("pdo", $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace()));
 			}
 		} else {
 			try {
@@ -67,7 +67,7 @@ abstract Class Model
 			}
 			catch(\PDOException $e)
 			{
-				IsmaException::display_exception("pdo", $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace());
+				die(IsmaException::display_exception("pdo", $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace()));
     		}
     	}
     }
@@ -78,7 +78,7 @@ abstract Class Model
 	 *
 	 * @return PDO; $pdo
 	 */
-	public function get_pdo () {
+	static public function get_pdo () {
 		return self::$pdo;
 	}
 	/*
@@ -93,7 +93,7 @@ abstract Class Model
 	 * @param string;  $password  Password to connect to the database
 	 * @param string;  $Socket    Path of the mysql socket (linux only)
 	 */
-	public function set_pdo ($host, $port, $database, $username, $password, $socket = null) {
+	static public function set_pdo ($host, $port, $database, $username, $password, $socket = null) {
 		if (!empty($host) && !empty($database) && !empty($port) && !empty($username)) {
 			if ($socket === null) {
 				try {
@@ -101,7 +101,7 @@ abstract Class Model
 				}
 				catch(\PDOException $e)
 				{
-					var_dump($e->getMessage());
+					die(IsmaException::display_exception("pdo", $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace()));
 				}
 			} else {
 				try {
@@ -109,7 +109,7 @@ abstract Class Model
 				}
 				catch(\PDOException $e)
 				{
-					var_dump($e->getMessage());
+					die(IsmaException::display_exception("pdo", $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace()));
 				}
 			}
 		}
@@ -140,7 +140,7 @@ abstract Class Model
     	$className = rtrim($className, "s") . 's';
     	$db = self::$pdo;
     	if ($db === null) {
-    		var_dump("You must check your database configuration !!");
+			die(IsmaException::display_exception("pdo", "You must check your database configuration !!", 0, __FILE__, __LINE__, debug_backtrace()));
     	} else {
     		$sql = 'SELECT * FROM ' . $className . ' WHERE ' . $where;
     		$request = $db->prepare($sql);
@@ -174,7 +174,7 @@ abstract Class Model
 		$className = rtrim($className, "s") . 's';
 		$db = self::$pdo;
 		if ($db === null) {
-			var_dump("You must check your database configuration !!");
+			die(IsmaException::display_exception("pdo", "You must check your database configuration !!", 0, __FILE__, __LINE__, debug_backtrace()));
 		} else {
 			$sql = 'SELECT ' . $field . ' FROM ' . $className;
 			$request = $db->prepare($sql);
@@ -212,7 +212,6 @@ abstract Class Model
 	 */
 	public function create_field($type, $name, $length = null, $options = null, $default = null)
 	{
-		$connection = unserialize(constant('database_config'));
 		if (!empty($type) && !empty($name)) {
 			if ($options === null) {
 				$options = "";
@@ -257,7 +256,7 @@ abstract Class Model
 					break;
 				case "enum":
 					if ($length === null) {
-						return;
+						return "";
 					}
 					if ($default !== null) {
 						$validate_default = false;
@@ -330,7 +329,7 @@ abstract Class Model
 		if (!empty($table_name) && !empty($array_field)) {
 			$db = self::$pdo;
 			if ($db === null) {
-				var_dump("You must check your database configuration !!");
+				die(IsmaException::display_exception("pdo", "You must check your database configuration !!", 0, __FILE__, __LINE__, debug_backtrace()));
 			} else {
 				$sql = "CREATE TABLE IF NOT EXISTS `$table_name`(";
 				for ($i = 0; $i < count($array_field); $i = $i + 1) {
@@ -354,15 +353,15 @@ abstract Class Model
 	 *
 	 * @return void
 	 */
-	public function database_execute ($sql) {
+	static public function database_execute ($sql) {
 		if (!empty($sql)) {
 			if (self::$pdo === null) {
-				var_dump("You must check your database configuration !!");
+				die(IsmaException::display_exception("pdo", "You must check your database configuration !!", 0, __FILE__, __LINE__, debug_backtrace()));
 			} else {
 				try {
 					self::$pdo->exec($sql);
 				} catch (\PDOException $e) {
-					var_dump($e);
+					die(IsmaException::display_exception("pdo", $e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace()));
 				}
 			}
 		}
