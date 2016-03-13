@@ -38,6 +38,35 @@ abstract class Controller
      */
     public function change_media_render ($view_content)
     {
+        $array_request_uri = explode("/", ltrim($_SERVER["REQUEST_URI"], "/"));
+        $path_count = count($array_request_uri) - 3;
+        $css_path = "";
+        if ($path_count === 0) {
+            $css_path = "css" . constant("DS");
+        } elseif ($path_count > 0) {
+            for ($i = 0; $i < $path_count; $i = $i + 1) {
+                $css_path = $css_path . ".." . constant("DS");
+            }
+            $css_path = $css_path . "css" . constant("DS");
+        }
+        $js_path = "";
+        if ($path_count === 0) {
+            $js_path = "js" . constant("DS");
+        } elseif ($path_count > 0) {
+            for ($j = 0; $j < $path_count; $j = $j + 1) {
+                $js_path = $js_path . ".." . constant("DS");
+            }
+            $js_path = $js_path . "js" . constant("DS");
+        }
+        $img_path = "";
+        if ($path_count === 0) {
+            $img_path = "js" . constant("DS");
+        } elseif ($path_count > 0) {
+            for ($k = 0; $k < $path_count; $k = $k + 1) {
+                $img_path = $img_path . ".." . constant("DS");
+            }
+            $img_path = $img_path . "js" . constant("DS");
+        }
         $array_css = array();
         $array_js = array();
         $array_img = array();
@@ -46,10 +75,10 @@ abstract class Controller
         preg_match_all('/(?<={% js:)(.*)(?= %})/', $view_content, $array_js);
         preg_match_all('/(?<={% img:)(.*)(?= %})/', $view_content, $array_img);
         foreach ($array_css[0] as $css) {
-            $view_content = preg_replace('/{% css:' . $css . ' %}/', '<link media="all" type="text/css" rel="stylesheet" href="css/' . $css . '">', $view_content);
+            $view_content = preg_replace('/{% css:' . $css . ' %}/', '<link media="all" type="text/css" rel="stylesheet" href="' . $css_path . $css . '">', $view_content);
         }
         foreach ($array_js[0] as $js) {
-            $view_content = preg_replace('/{% js:' . $js . ' %}/', '<script src="js/' . $js . '"></script>', $view_content);
+            $view_content = preg_replace('/{% js:' . $js . ' %}/', '<script src="' . $js_path . $js . '"></script>', $view_content);
         }
         foreach ($array_img[0] as $img) {
             $array_img_array[$img] = explode("|", $img);
@@ -71,7 +100,7 @@ abstract class Controller
             $the_full_img = "<img ";
             foreach ($id_value as $attribute => $value) {
                 if ($attribute === "src") {
-                    $the_full_img = $the_full_img . "src". '="img/' . $value . '" ';
+                    $the_full_img = $the_full_img . "src". '="' . $img_path . $value . '" ';
                 } else {
                     $the_full_img = $the_full_img . $attribute . '="' . $value . '" ';
                 }
