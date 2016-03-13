@@ -48,12 +48,14 @@ html,body {
 .error_file {
     font-size: 1.5em;
 }
-.error_class {
+.error_class,
+.error_controller{
     font-size: 1.5em;
     font-weight: bold;
     color: #2238ef;
 }
-.error_function {
+.error_function,
+.error_method {
     font-size: 1.5em;
     font-weight: bold;
     color: #2ea500;
