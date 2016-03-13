@@ -48,6 +48,7 @@ class IsmaException extends \Exception
      */
     public function database_exception ($error_message, $error_code, $error_file, $error_line, $error_trace)
     {
+        $array_exception = array();
         if (!empty($error_message) && !empty($error_file) && !empty($error_line) && !empty($error_trace)) {
                 $database_config = unserialize(constant("database_config"));
                 switch ($error_code) {
@@ -56,21 +57,21 @@ class IsmaException extends \Exception
                             $error_message = "You don't set a user to connect to the database !!";
                         } else {
                             if (empty($database_config["database_password"])) {
-                                $error_message = "Access denied for user " . $database_config["database_username"] . ", maybe you forgot to write the password";
+                                $error_message = "Access denied for user <span class='database_username'>" . $database_config["database_username"] . "</span>, maybe you forgot to write the password";
                             } else {
-                                $error_message = "Access denied for user " . $database_config["database_username"] . ", maybe you're wrong by writing your password";
+                                $error_message = "Access denied for user <span class='database_username'>" . $database_config["database_username"] . "</span>, maybe you're wrong by writing your password";
                             }
                         }
                         break;
                     case 2005:
-                        $error_message = "The host " . $database_config["host"] . " wasn't a MySQL server";
+                        $error_message = "The host <span class='host'>" . $database_config["host"] . "</span> wasn't a MySQL server";
                         break;
                     case 1049:
-                        $error_message = "The database " . $database_config["database_name"] . " wasn't found";
+                        $error_message = "The database <span class='database_name'>" . $database_config["database_name"] . "</span> wasn't found";
                         break;
                 }
                 $array_trace = array();
-                foreach ($error_trace as $trace) {
+            foreach ($error_trace as $trace) {
                     if (empty($trace["args"])) {
                         $error_args = "()";
                     } else {
@@ -85,17 +86,16 @@ class IsmaException extends \Exception
                         }
                         $error_args = $error_args . ")";
                     }
-                    array_push($array_trace, "Error in " . $trace["file"] . " line number " . $trace["line"] . " :\nClass " . $trace["class"] . " function " . $trace["function"] . $error_args . " <=> " . $trace["class"] . $trace["type"] . $trace["function"] . $error_args);
+                    array_push($array_trace, "Error in <span class='error_file'>" . $trace["file"] . "</span> line number <span class='error_line'>" . $trace["line"] . "</span> :<br/>Class <span class='error_class'>" . $trace["class"] . "</span> function <span class='error_function'>" . $trace["function"] . $error_args . "</span>  <span class='error_class'>" . $trace["class"] . "</span> <span class='error_type'>" . $trace["type"] . "</span><span class='error_function'>" . $trace["function"] . $error_args . "</span>");
                 }
-                $array_exception = array(
-                    "message" => $error_message,
-                    "code" => $error_code,
-                    "file" => $error_file,
-                    "line" => $error_line,
-                    "trace" => $array_trace
+            $array_exception = array(
+                    "error_message" => $error_message,
+                    "error_code" => $error_code,
+                    "error_file" => $error_file,
+                    "error_line" => $error_line,
+                    "error_traces" => array($array_trace)
                 );
-            } else {
-            }
+        }
             return $array_exception;
     }
     /*
@@ -112,13 +112,16 @@ class IsmaException extends \Exception
      *
      * @return string;
      */
-    public function display_exception ($type, $message, $code, $file, $line, $trace)
+    static public function display_exception ($type, $message, $code, $file, $line, $trace)
     {
         if (!empty($type)) {
             switch ($type) {
                 case "pdo":
                     $array_exception = self::database_exception($message, $code, $file, $line, $trace);
-                    Controller::exception_render($array_exception, constant("error_description"), constant("project_name"));
+                    $array_exception["error_description"] = constant("error_description");
+                    $array_exception["project_name"] = constant("project_name");
+                    $array_exception["error_header"] = constant("error_header");
+                    Controller::render("error:error.html", $array_exception, "public_path");
                 break;
             }
         }
