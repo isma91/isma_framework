@@ -76,22 +76,26 @@ class Core
     	try {
     		Core::register_autoload();
     		if (isset($_GET["page"])) {
-    			if (file_exists(constant("controllers_path") . ucfirst($_GET["page"]) . "Controller.php")) {
-    				require_once(constant("controllers_path") . ucfirst($_GET["page"]) . "Controller.php");
-    				$class_name = 'app\controllers\\' . ucfirst($_GET["page"] . "Controller");
+                $class_name_page = ucfirst($_GET["page"]);
+                if (substr($class_name_page, -10) === "Controller") {
+                    $class_name_page = substr($class_name_page,0 , -10);
+                }
+    			if (file_exists(constant("controllers_path") . $class_name_page . "Controller.php")) {
+    				require_once(constant("controllers_path") . $class_name_page . "Controller.php");
+    				$class_name = 'app\controllers\\' . $class_name_page . "Controller";
     				$class = new $class_name();
     				if (empty($_GET['action'])) {
     					$action = 'indexAction';
     				} else {
-    					$action = $_GET['action'] . 'Action';
+    					$action = rtrim($_GET['action'], "Action") . 'Action';
     				}
     				if (!method_exists($class, $action)) {
-						die(IsmaException::display_exception("Controller <span class='error_controller'>" . ucfirst($_GET["page"]) . "Controller</span>" . " have not a method called <span class='error_method'>" . $action . "</span> !!!", 0, __FILE__, __LINE__, debug_backtrace()));
+						die(IsmaException::display_exception("Controller <span class='error_controller'>" . $class_name_page . "Controller</span>" . " have not a method called <span class='error_method'>" . $action . "</span> !!!", 0, __FILE__, __LINE__, debug_backtrace()));
 					} else {
 						$class->$action();
 					}
 				} else {
-					die(IsmaException::display_exception("Controller <span class='error_controller'>" . ucfirst($_GET["page"]) . "Controller" . "</span> not found !!!", 0, __FILE__, __LINE__, debug_backtrace()));
+					die(IsmaException::display_exception("Controller <span class='error_controller'>" .$class_name_page . "Controller" . "</span> not found !!!", 0, __FILE__, __LINE__, debug_backtrace()));
     			}
     		}
     	} catch (\Exception $e) {
