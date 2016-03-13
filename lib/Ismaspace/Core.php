@@ -86,16 +86,16 @@ class Core
     					$action = $_GET['action'] . 'Action';
     				}
     				if (!method_exists($class, $action)) {
-    					var_dump("Controller " . ucfirst($_GET["page"]) . "Controller" . " have not a method called " . $action . " !!!");
-    				} else {
-    					$class->$action();
-    				}
-    			} else {
-    				var_dump("Controller " . ucfirst($_GET["page"]) . "Controller" . " not found !!!");
+						die(IsmaException::display_exception("Controller <span class='error_controller'>" . ucfirst($_GET["page"]) . "Controller</span>" . " have not a method called <span class='error_method'>" . $action . "</span> !!!", 0, __FILE__, __LINE__, debug_backtrace()));
+					} else {
+						$class->$action();
+					}
+				} else {
+					die(IsmaException::display_exception("Controller <span class='error_controller'>" . ucfirst($_GET["page"]) . "Controller" . "</span> not found !!!", 0, __FILE__, __LINE__, debug_backtrace()));
     			}
     		}
     	} catch (\Exception $e) {
-    		var_dump($e->getMessage());
+			die(IsmaException::display_exception($e->getMessage(), $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace()));
     	}
     }
 }
