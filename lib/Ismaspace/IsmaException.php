@@ -34,9 +34,9 @@ class IsmaException extends \Exception
         parent::__construct($message, $code, $previous);
     }
     /*
-     * Database_exception
+     * Parse_exception
      *
-     * Display the PDOException
+     * Parse the Exception
      *
      * @param string; $message The error message
      * @param string; $code    The error code
@@ -44,9 +44,9 @@ class IsmaException extends \Exception
      * @param int;    $line    The line where the error come
      * @param array;  $trace   The error trace
      *
-     * @return array; The PDOException parsed in an array
+     * @return array; The Exception parsed in an array
      */
-    public function database_exception ($error_message, $error_code, $error_file, $error_line, $error_trace)
+    public function parse_exception ($error_message, $error_code, $error_file, $error_line, $error_trace)
     {
         $array_exception = array();
         if (!empty($error_message) && !empty($error_file) && !empty($error_line) && !empty($error_trace)) {
@@ -103,7 +103,6 @@ class IsmaException extends \Exception
      *
      * Display the exception in a html file
      *
-     * @param string; $type    The type of error (pdo, runtime etc...)
      * @param string; $message The error message
      * @param string; $code    The error code
      * @param string; $file    The file where the error come
@@ -112,18 +111,12 @@ class IsmaException extends \Exception
      *
      * @return string;
      */
-    static public function display_exception ($type, $message, $code, $file, $line, $trace)
+    static public function display_exception ($message, $code, $file, $line, $trace)
     {
-        if (!empty($type)) {
-            switch ($type) {
-                case "pdo":
-                    $array_exception = self::database_exception($message, $code, $file, $line, $trace);
-                    $array_exception["error_description"] = constant("error_description");
-                    $array_exception["project_name"] = constant("project_name");
-                    $array_exception["error_header"] = constant("error_header");
-                    Controller::render("error:error.html", $array_exception, "public_path");
-                break;
-            }
-        }
+        $array_exception = self::parse_exception($message, $code, $file, $line, $trace);
+        $array_exception["error_description"] = constant("error_description");
+        $array_exception["project_name"] = constant("project_name");
+        $array_exception["error_header"] = constant("error_header");
+        Controller::render("error:error.html", $array_exception, "public_path");
     }
 }
