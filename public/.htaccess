@@ -7,3 +7,6 @@ RewriteRule ^([a-z0-9A-Z]+)/([a-z0-9A-Z]+)$ index.php?page=$1&action=$2
 RewriteRule ^([a-z0-9A-Z]+)/([a-z0-9A-Z]+)/$ index.php?page=$1&action=$2
 RewriteRule ^index.php/([a-z0-9A-Z]+)/([a-z0-9A-Z]+)$ index.php?page=$1&action=$2
 RewriteRule ^index.php/([a-z0-9A-Z]+)/([a-z0-9A-Z]+)/$ index.php?page=$1&action=$2
+#If you change the project name, don't forget to change isma_framework by the new name
+#404 not found
+ErrorDocument 404 /isma_framework/public/error/404.php
