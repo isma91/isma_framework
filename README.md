@@ -13,14 +13,15 @@ You can also use `cmd.php` to use the framework more quickly and easier
 The view is in :  
 
 ```
-http://your_localhost/public/
+http://localhost/{{ project_name }}/public/
 ```
   
 After public/ the next parameter is the Controler name and the next one is the Method name :  
 ```
-http://your_localhost/public/Test/bla
+http://localhost/{{ project_name }}/public/Test/bla
 ```
   
+{{ project_name }} is the name of the framework directory (you can change it for your personnal project)
 In this exemple we use in `TestController.php` the method `blaAction()`
   
 You can prepare the replacement in the template like this :  
