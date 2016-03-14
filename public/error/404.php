@@ -60,7 +60,7 @@ if ($path_count === 0) {
         <?php echo constant("error_header"); ?>
     </div>
     <div class="mui-panel div_error">
-        <span class="error_title">Error :</span><span class="error_code">404</span>
+        <span class="error_titleB">Error :</span><span class="error_code">404</span>
     </div>
 </div>
 </body>
