@@ -112,6 +112,9 @@ abstract class Controller
             $value_to_find = str_replace('|', '\|', $value_to_find);
             $view_content = preg_replace("/" . $value_to_find . "/", $value_to_replace, $view_content);
         }
+        preg_match("/<head>(.*?)<\/head>/s", $view_content, $header_to_replace);
+        $header = '<head>' . "\n" . '<link rel="shortcut icon" type="image/x-icon" href="' . $img_path . 'favicon.ico" />' . substr($header_to_replace[0], strlen('<head>'));
+        $view_content = str_replace($header_to_replace[0], $header, $view_content);
         return $view_content;
     }
     /**
