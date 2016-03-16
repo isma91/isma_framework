@@ -84,3 +84,9 @@ define('database_config', serialize($database_array));
 define("error_description", "You are in the error page !!");
 define("project_name", basename(__DIR__));
 define("error_header", "Looks like something is wrong !!");
+/*
+ * If you want the debugger, you can set to true
+ * If you didn't want it, set it to false
+ *
+ */
+define("debug_mode", true);
