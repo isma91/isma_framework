@@ -18,7 +18,7 @@ if (!defined("framework_version") || !defined("framework_date_version")) {
  *
  * In this class, you gonna create, rename, drop table in the database
  *
- * PHP Version 5.6.17
+ * PHP Version 7.0.8
  *
  * @category Model
  * @author   isma91 <ismaydogmus@gmail.com>
@@ -31,6 +31,7 @@ class Migration extends Model
      * UsersTable
      *
      * Exemple to create the users table
+     *
      */
     public function usersTable ()
     {
