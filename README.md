@@ -3,12 +3,14 @@
 
 You can use it in **linux** and **windows**
 
-- Latest release : **version** : *1.4.00* **date** : *14-03-2016*
+- Latest release : **version** : *1.5.00* **date** : *05-08-2016*
 - License : [AGPLv3](http://www.gnu.org/licenses/agpl-3.0.fr.html)
 
 You must edit the `config.php` and change the value in `$array_database`  
 
 You can also use `cmd.php` to use the framework more quickly and easier
+
+/!\ See the [wiki](https://github.com/isma91/isma_framework/wiki) for a better understanding of the framework
 
 The view is in :  
 
