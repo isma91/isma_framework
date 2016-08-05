@@ -10,7 +10,8 @@ You must edit the `config.php` and change the value in `$array_database`
 
 You can also use `cmd.php` to use the framework more quickly and easier
 
-/!\ See the [wiki](https://github.com/isma91/isma_framework/wiki) for a better understanding of the framework /!\
+This command line tool is here to create model or controller, can check if the core files work correctly.
+Don't forget to use this tool to create database table or to fill it.
 
 The view is in :  
 
