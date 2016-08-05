@@ -25,6 +25,7 @@ require_once("config.php");
 require_once(constant("lib_path") . "Ismaspace" . constant("DS") . "Core.php");
 \Ismaspace\Core::run();
 use Ismaspace\Migration;
+use Ismaspace\DatabaseSeeder;
 use Ismaspace\Model;
 /*
  * Colorize
@@ -193,6 +194,8 @@ function display_make () {
     colorize("Create a model in the models path", null, null, true);
     colorize(" make:controller [class_name]", null, "green", true);
     colorize("Create a controller in the controller path", null, null, true);
+    colorize(" make:seed [table_name]", null, "green", true);
+    colorize("Get the function [table_name]Table in the DatabaseSeeder.php and seed item to this database table", null, null, true);
 }
 /*
  * Check_file
@@ -566,6 +569,61 @@ function create_controller ($name_file) {
         }
     }
 }
+/*
+ * Seed_database
+ *
+ * Seed the database table with item who's in DatabaseSeeder.php
+ *
+ * @param string; $table_name The database table name
+ *
+ * @return void
+ */
+function seed_database ($table_name)
+{
+    $function_name = $table_name . "Table";
+    if (method_exists(new DatabaseSeeder(), $function_name) === true)
+    {
+        colorize("Here is the SQL query :", "cyan", "black", true);
+        $sql = DatabaseSeeder::$function_name();
+        colorize($sql, "cyan", "white", true);
+        if (Model::get_pdo() !== null) {
+            colorize("Did you want to execute this query ?", "grey", "black", true);
+            colorize("[Y] [N]: ", "grey", "black", false);
+            $ask = 0;
+            $answer = fopen("php://stdin", "r");
+            $response = fgets($answer);
+            $response = trim($response);
+            $response = mb_strtoupper(substr($response, 0, 1));
+            while ($ask === 0) {
+                if ($response === "Y") {
+                    $ask++;
+                    colorize("Executing the SQL query...", "cyan", "black", true);
+                    try {
+                        Model::database_execute($sql);
+                        colorize("Table " . $table_name . " successfully filled !! Enjoy the framework !!", "green", "black", true);
+                    } catch (Exception $e) {
+                        colorize("Error when we try to execute the query !! Check your function " . $function_name . " in the DatabaseSeeder.php file !! Maybe you forgot some fields ?", "red", "black", true);
+                    }
+                } elseif ($response === "N") {
+                    colorize("The table " . $table_name . " won't be filled !!", "yellow", "black", true);
+                    $ask++;
+                } else {
+                    colorize("Tape N to refuse to fill the table " . $table_name . " or Y to execute the query !!", "yellow", "black");
+                    colorize("[Y] [N]: ", "grey", "black", false);
+                    $ask = 0;
+                    $answer = fopen("php://stdin", "r");
+                    $response = fgets($answer);
+                    $response = trim($response);
+                    $response = mb_strtoupper(substr($response, 0, 1));
+                }
+            }
+        } else {
+            colorize("You must check your database configuration !!", "red", "black", true);
+        }
+    } else {
+        colorize("Function " . $function_name . " not found in DatabaseSeeder.php", "red", "black", true);
+    }
+}
 if (count($argv) === 1) {
     display_cmd();
 } elseif (count($argv) === 2) {
@@ -620,6 +678,9 @@ if (count($argv) === 1) {
             break;
         case "make:model":
             create_model($argv[2]);
+            break;
+        case "make:seed":
+            seed_database($argv[2]);
             break;
     }
 }
