@@ -10,7 +10,7 @@ You must edit the `config.php` and change the value in `$array_database`
 
 You can also use `cmd.php` to use the framework more quickly and easier
 
-/!\ See the [wiki](https://github.com/isma91/isma_framework/wiki) for a better understanding of the framework
+/!\ See the [wiki](https://github.com/isma91/isma_framework/wiki) for a better understanding of the framework /!\
 
 The view is in :  
 
