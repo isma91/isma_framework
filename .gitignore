@@ -1,1 +1,3 @@
 .idea/
+app/controllers/controller_template.php
+app/models/model_template.php
