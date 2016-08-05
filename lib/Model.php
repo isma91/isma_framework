@@ -369,15 +369,33 @@ abstract Class Model
 	/*
 	 * Seed_to_database
 	 *
-	 * function to parse the $array_field to convert him to SQL
+	 * function to parse the $array_array_field to convert him to SQL
 	 *
-	 * @param array; $array_field The array where is the field to fill
+	 * @param array; $array_array_field Multiple array where is the field to fill
 	 * @param string; $table_name The table name of the database, was the function name in the DatabaseSeeder Class
 	 *
 	 * @return void
 	 */
-	static public function seed_to_database (array $array_field, $table_name)
+	public function seed_to_database (array $array_array_field, $table_name)
     {
-        //var_dump($table_name);
+        $table_name = substr($table_name, 0 , -5);
+        $sql = "";
+        foreach ($array_array_field as $array_field)
+        {
+            $tmp_sql = "INSERT INTO `$table_name` (";
+            foreach ($array_field as $field => $value) {
+                $tmp_sql = $tmp_sql . "$field, ";
+            }
+            $tmp_sql = substr($tmp_sql, 0, -2) . ") VALUES (";
+            foreach ($array_field as $field => $value) {
+                if (!is_int($value)) {
+                    $value = "'$value'";
+                }
+                $tmp_sql = $tmp_sql . "$value, ";
+            }
+            $tmp_sql = substr($tmp_sql, 0, -2) . ");";
+            $sql = $sql . $tmp_sql;
+        }
+        return $sql;
     }
 }
