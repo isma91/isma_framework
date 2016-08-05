@@ -22,7 +22,7 @@ if (!defined("framework_version") || !defined("framework_date_version")) {
  * The core of the framework 
  *
  * 
- * PHP Version 5.6.17
+ * PHP Version 7.0.8
  *
  * @category Controller
  * @author   isma91 <ismaydogmus@gmail.com>
@@ -60,7 +60,7 @@ class Core
     			include_once constant("controllers_path") . $class . ".php";
     		} elseif ($class === "Model") {
     			include_once constant("lib_path") . $class . ".php";
-    		} elseif ($class === "Migration") {
+    		} elseif ($class === "Migration" || $class === "DatabaseSeeder") {
     			include_once constant("database_path") . $class . ".php";
     		} elseif ($class === "IsmaException") {
 				include_once constant("ismaspace_path") . "IsmaException.php";
