@@ -31,12 +31,26 @@ class DatabaseSeeder extends Model
      * UsersTable
      *
      * Exemple to seed the users table
+     * You just need to add all the arrays in a big array and send to seed_to_database of the Model Class
      *
      * @return void
      */
     public function usersTable ()
     {
-        Model::seed_to_database(array("id" => 0, "firstname" => "foo", "lastname" => "bar", "username" => "foo42", "birthdate" => "1994-02-20"), __FUNCTION__);
-        Model::seed_to_database(array("id" => 1, "firstname" => "Hello", "lastname" => "Olleh", "username" => "Heeh", "birthdate" => "2000-01-01"), __FUNCTION__);
+        $user0 = array(
+            "id" => 1,
+            "firstname" => "foo",
+            "lastname" => "bar",
+            "username" => "foo42",
+            "birthdate" => "1994-02-20"
+        );
+        $user1 = array(
+            "id" => 2,
+            "firstname" => "Hello",
+            "lastname" => "Olleh",
+            "username" => "Heeh",
+            "birthdate" => "2000-01-01"
+        );
+        return Model::seed_to_database(array($user0, $user1), __FUNCTION__);
     }
 }
