@@ -19,7 +19,7 @@ if (!defined("framework_version") || !defined("framework_date_version")) {
  *
  * An abstract class where you have all important method for every model
  * 
- * PHP Version 5.6.17
+ * PHP Version 7.0.8
  *
  * @category Model
  * @author   isma91 <ismaydogmus@gmail.com>
@@ -213,18 +213,18 @@ abstract Class Model
 	public function create_field($type, $name, $length = null, $options = null, $default = null)
 	{
 		if (!empty($type) && !empty($name)) {
-			if ($options === null) {
+			if ($options == null) {
 				$options = "";
 			}
-			if ($default === null) {
+			if ($default == null) {
 				$default = "";
 			}
-			if ($length === null) {
+			if ($length == null) {
 				$length = "";
 			} else {
 				$length = "(" . $length . ")";
 			}
-			if ($default === null) {
+			if ($default == null) {
 				$default = "";
 			} else {
 				$default = "DEFAULT" . " '" . $default . "'";
@@ -366,4 +366,18 @@ abstract Class Model
 			}
 		}
 	}
+	/*
+	 * Seed_to_database
+	 *
+	 * function to parse the $array_field to convert him to SQL
+	 *
+	 * @param array; $array_field The array where is the field to fill
+	 * @param string; $table_name The table name of the database, was the function name in the DatabaseSeeder Class
+	 *
+	 * @return void
+	 */
+	static public function seed_to_database (array $array_field, $table_name)
+    {
+        //var_dump($table_name);
+    }
 }
