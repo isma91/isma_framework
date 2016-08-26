@@ -52,6 +52,6 @@ For loop you must do like this :
 
 In your controller, you must render with an array like this :  
 ```
-$users = $user_table->find_all('*');
+$users = $user_table->select('*');
 $this->render("Index:test.html", array("users" => $users));
 ```
