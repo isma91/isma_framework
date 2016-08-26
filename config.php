@@ -46,10 +46,10 @@ define("database_path", constant("framework_path") . constant("DS") . "database"
  * To check the framework version
  */
 if (!defined("framework_version")) {
-	define("framework_version", "1.5.00");
+	define("framework_version", "1.6.00");
 }
 if (!defined("framework_date_version")) {
-	define("framework_date_version", "05-08-2016");
+	define("framework_date_version", "26-08-2016");
 }
 if (!defined("cmd_version")) {
 	define("cmd_version", "1.4.0");
