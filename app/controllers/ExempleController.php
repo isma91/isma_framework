@@ -50,7 +50,6 @@ class ExempleController extends Controller
         $where = "username = 'foo42'";
         $user = $user_table->select($field, $where);
         $users = $user_table->select(array('*'));
-        var_dump($user);
         $this->render("Index:test.html", array_merge(array("users" => $users), array("foo" => "bar", "baz" => 42, "wesh" => "ouais ouais ouais", "b2o" => "izi")));
     }
 }
