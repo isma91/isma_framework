@@ -167,13 +167,14 @@ abstract Class Model
      *
      * Function to select something in the SQL, return false in FAIL or an array in SUCCESS
      *
-     * @param string $where;         the where statement
-     * @param array  $innerJoin;     Array of arrays for multiple inner join
-     * @param array  $filedAndValue; the array who have $field => $value
+     * @param array  $field;     the array who have $field => $value
+     * @param string $where;     the where statement
+     * @param array  $innerJoin; Array of arrays for multiple inner join
+     * @param string $other      Other thing to add at the end of the SQL query
      *
      * @return boolean|Array
      */
-    public function select (array $field, $where = null, array $innerJoin = null)
+    public function select (array $field, $where = null, array $innerJoin = null, $other = null)
     {
         $bdd = self::$pdo;
         if($bdd === null){
@@ -203,6 +204,9 @@ abstract Class Model
             }
             if (!is_null($where)) {
                 $query = $query . " WHERE $where";
+            }
+            if (!is_null($other)) {
+                $query = $query . " $other";
             }
             $sql = $bdd->prepare($query);
             if ($sql->execute()) {
