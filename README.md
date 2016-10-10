@@ -3,7 +3,7 @@
 
 You can use it in **linux** and **windows**
 
-- Latest release : **version** : *1.6.00* **date** : *26-08-2016*
+- Latest release : **version** : *1.6.10* **date** : *10-10-2016*
 - License : [AGPLv3](http://www.gnu.org/licenses/agpl-3.0.fr.html)
 
 You must edit the `config.php` and change the value in `$array_database`  
